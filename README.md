@@ -38,7 +38,6 @@
 <p align="right"> 右起 </p>
 <p align="center"> 居中 </p>
 <details> <summary>概述（展开可见原始史料）</summary> 这里放原始史料…… 这里放几十页…… </details>
-
 下标：H<sub>2</sub>O
 上标：10<sup>6</sup>
 
@@ -46,14 +45,55 @@
 
 ## 段落处理
 
-> Refer
+|代码|显示名称|适合你的用途|
+|---|---|---|
+|`[!note]`|Note|一般说明、补充说明|
+|`[!abstract]`|Abstract|摘要、文章概述|
+|`[!summary]`|Summary|总结（abstract 的别名）|
+|`[!tldr]`|TL;DR|太长不看版|
+|`[!info]`|Info|背景介绍|
+|`[!todo]`|Todo|尚待考证的问题|
+|`[!tip]`|Tip|阅读建议、研究技巧|
+|`[!hint]`|Hint|tip 的别名|
+|`[!important]`|Important|特别重要|
+|`[!success]`|Success|已确认事实|
+|`[!check]`|Check|success 别名|
+|`[!done]`|Done|success 别名|
+|`[!question]`|Question|存疑、待讨论|
+|`[!help]`|Help|求助、疑问|
+|`[!faq]`|FAQ|常见问题|
+|`[!warning]`|Warning|有争议、需谨慎|
+|`[!attention]`|Attention|warning 别名|
+|`[!caution]`|Caution|warning 别名|
+|`[!failure]`|Failure|被证伪观点|
+|`[!fail]`|Fail|failure 别名|
+|`[!missing]`|Missing|史料缺失|
+|`[!danger]`|Danger|高度争议、严重错误|
+|`[!error]`|Error|文献错误|
+|`[!bug]`|Bug|（程序笔记常用）|
+|`[!example]`|Example|举例|
+|`[!quote]`|Quote|引文、原始史料|
 
-> [!info] Info
+
+## Quartz自定义
+
+修改高亮颜色：
+mark {
+    background: #ffd54f;
+}
+
+修改Refer颜色：
+> 后来回忆……
 
 
-> [!note] Note
+blockquote {
+    border-left:5px solid #b22222;
+}
 
+修改Quote颜色：
+> [!quote] Quote
+ 
+.callout[data-callout="quote"]
 
-> [!quote] Quotation
-
-[^1]脚注
+修改标题风格（牛津历史系风）
+h1 { color:#7c1f1f; }

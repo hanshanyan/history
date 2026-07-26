@@ -76,6 +76,21 @@
   .chron-cols { grid-template-columns: 1fr; }
 }
 
+// 年谱：按日期段分组的横向分隔带（每条带 = 一个日期段标题 + 下方三栏）
+// 用法：<div class="chron-band">2.3</div> 紧跟 <div class="chron-cols">…</div>
+// 用 div 而非 ### 标题，避免污染目录(TOC)；同日期段被归在同一水平行。
+.chron-band {
+  margin: 1.6rem 0 0.5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  padding: 0.35rem 0.7rem;
+  border-left: 4px solid var(--secondary, #888);
+  background: var(--light, #f3f3f3);
+  border-radius: 4px;
+  color: var(--dark, #222);
+}
+
 // —— 右侧栏已清空（图谱已移到正文底部），桌面端收掉右侧 320px 轨道，让文章列更宽 ——
 @media (min-width: 1200px) {
   .page > #quartz-body {
