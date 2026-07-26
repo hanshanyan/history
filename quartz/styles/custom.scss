@@ -74,10 +74,9 @@
   .chronology { grid-template-columns: 1fr; }
 }
 
-// —— 引用 callout（> [!quote]）：学术引用感——正文更小、斜体、弱化色，标题小号大写 ——
+// —— 引用 callout（> [!quote]）：学术引用感——正文更小、弱化色，标题小号大写（已去斜体）——
 .callout[data-callout="quote"] .callout-content {
   font-size: 0.85em;
-  font-style: italic;
   line-height: 1.75;
   color: var(--gray, #6b6b6b);
 }
