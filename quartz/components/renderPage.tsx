@@ -78,11 +78,15 @@ function renderTranscludes(
       if (classNames.includes("transclude")) {
         const inner = node.children[0] as Element
         const transcludeTarget = (inner.properties["data-slug"] ?? slug) as FullSlug
-        if (visited.has(transcludeTarget)) {
+        // 安全 Patch：visited 按 "文件+块ID" 去重，允许同一篇笔记的多个不同块在同页被嵌入；
+        // 但全篇嵌入（无块ID）仍按整篇 slug 去重，从而保留真正的循环检测（避免 A↔B 互嵌无限递归）。
+        let blockRef = node.properties.dataBlock as string | undefined
+        const visitKey = (blockRef ? `${transcludeTarget}${blockRef}` : transcludeTarget) as FullSlug
+        if (visited.has(visitKey)) {
           console.warn(
             styleText(
               "yellow",
-              `Warning: Skipping circular transclusion: ${slug} -> ${transcludeTarget}`,
+              `Warning: Skipping circular transclusion: ${slug} -> ${visitKey}`,
             ),
           )
           node.children = [
@@ -93,21 +97,20 @@ function renderTranscludes(
               children: [
                 {
                   type: "text",
-                  value: `Circular transclusion detected: ${transcludeTarget}`,
+                  value: `Circular transclusion detected: ${visitKey}`,
                 },
               ],
             },
           ]
           return
         }
-        visited.add(transcludeTarget)
+        visited.add(visitKey)
 
         const page = componentData.allFiles.find((f) => f.slug === transcludeTarget)
         if (!page) {
           return
         }
 
-        let blockRef = node.properties.dataBlock as string | undefined
         if (blockRef?.startsWith("#^")) {
           // block transclude
           blockRef = blockRef.slice("#^".length)
