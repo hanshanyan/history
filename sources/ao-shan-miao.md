@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 敖山庙伏击
+title: 刘显宜：敖山庙伏击
 ---
 
 # 敖山庙伏击

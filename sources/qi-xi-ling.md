@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 七溪岭战斗
+title: 陈士渠：七溪岭战斗
 ---
 
 # 七溪岭战斗
