@@ -33,7 +33,11 @@
 //    才能盖过 .page > #quartz-body .center { margin-left:auto; margin-right:auto }
 .page > #quartz-body .center {
   margin-left: 0;
-  margin-right: auto;
+  margin-right: 0;
+  // 右侧留白：避免文章贴到右边缘；
+  // 左侧在 320px 侧栏之后也补一点内距，使左右观感平衡
+  padding-left: 1rem;
+  padding-right: clamp(1.5rem, 4vw, 4rem);
 }
 // 注意：不要用 .center 作“文字居中”工具类，它会与布局的 .center 冲突导致全文居中；
 //       需要文字居中请用 .text-center（已定义）。
@@ -79,5 +83,10 @@
   }
   .page > #quartz-body > .sidebar.right {
     display: none;
+  }
+  // 左侧栏内容超出视口时允许滚动，确保探索/目录/反向链接/图谱都能展开看到
+  .page > #quartz-body > .sidebar.left {
+    max-height: 100vh;
+    overflow-y: auto;
   }
 }
