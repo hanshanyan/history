@@ -79,7 +79,7 @@
 {% assign notes_src = site.pages | where_exp: "p", "p.path contains 'sources/'" %}
 {% assign notes_nar = site.pages | where_exp: "p", "p.path contains 'narrative/'" %}
 {% assign notes = notes_src | concat: notes_nar %}
-{% for p in notes %}  {"title": {{ p.title | jsonify }}, "url": "{{ p.url | relative_url }}", "excerpt": {{ p.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}}{% unless forloop.last %},{% endunless %}
+{% for p in notes %}  {"title": {{ p.title | jsonify }}, "url": "{{ p.url | relative_url }}", "excerpt": {{ p.content | strip_html | replace: "==", "" | strip_newlines | truncatewords: 30 | jsonify }}}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
   </script>
@@ -171,6 +171,34 @@
         });
       }
     } catch (e) { console.error('wikilink 转换失败', e); }
+
+    // ===== Obsidian 高亮 ==文本== ：kramdown 不识别，转为黄色高亮 <span class="hl"> =====
+    try {
+      var hlMain = document.querySelector('main');
+      if (hlMain) {
+        var hre = /==([^=\n]+)==/g;
+        var hwalker = document.createTreeWalker(hlMain, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!node.nodeValue || node.nodeValue.indexOf('==') === -1) return NodeFilter.FILTER_REJECT;
+            var p = node.parentNode;
+            if (p && (p.tagName === 'CODE' || p.tagName === 'PRE' || p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        }, false);
+        var htargets = [];
+        while (hwalker.nextNode()) htargets.push(hwalker.currentNode);
+        htargets.forEach(function (tn) {
+          var html = tn.nodeValue.replace(hre, function (m, txt) {
+            return '<span class="hl">' + txt + '</span>';
+          });
+          if (html !== tn.nodeValue) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            tn.parentNode.replaceChild(span, tn);
+          }
+        });
+      }
+    } catch (e) { console.error('== 高亮转换失败', e); }
   })();
   </script>
 </body>
