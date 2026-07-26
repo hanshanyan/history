@@ -29,7 +29,8 @@ Jekyll::Hooks.register :site, :post_read do |site|
 end
 
 Jekyll::Hooks.register [:pages, :posts, :documents], :pre_render do |doc, _payload|
-  content = doc.content.to_s
+  begin
+    content = doc.content.to_s
   base    = (doc.site.config['baseurl'] || '').to_s
 
   # 0) 提取首个 H1 作为标题，供首页列表使用
@@ -63,4 +64,7 @@ Jekyll::Hooks.register [:pages, :posts, :documents], :pre_render do |doc, _paylo
   content = content.gsub(/\u0000(\d+)\u0000/) { code_blocks[$1.to_i] }
 
   doc.content = content
+  rescue => e
+    Jekyll.logger.warn "ObsidianCompat", "跳过文档 #{doc.path rescue '?'} : #{e.message}"
+  end
 end
