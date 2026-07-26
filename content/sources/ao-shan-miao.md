@@ -1,5 +1,4 @@
 ---
-layout: default
 title: 刘显宜：敖山庙伏击
 aliases:
 ---

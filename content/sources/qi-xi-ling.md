@@ -1,5 +1,4 @@
 ---
-layout: default
 title: 陈士渠：七溪岭战斗
 aliases:
 ---

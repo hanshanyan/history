@@ -1,5 +1,4 @@
 ---
-layout: default
 title: 方顺安：我秘密受命为林彪开车
 aliases:
   - 工作人员
