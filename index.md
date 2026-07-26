@@ -11,3 +11,10 @@ title: 寒山唁的历史研究资料库
 {% for note in notes %}
  [{{ note.title }}]({{ note.url | relative_url }})
 {% endfor %}
+
+# 💬旁观者说
+
+{% assign notes = site.pages | where_exp: "p", "p.path contains 'narrative/'" %}
+{% for note in notes %}
+ [{{ note.title }}]({{ note.url | relative_url }})
+{% endfor %}
