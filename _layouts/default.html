@@ -74,7 +74,8 @@
   <script>
   (function () {
     var indexEl = document.getElementById('note-index');
-    var DATA = indexEl ? JSON.parse(indexEl.textContent) : [];
+    var DATA = [];
+    try { DATA = indexEl ? JSON.parse(indexEl.textContent) : []; } catch (e) { console.error('note-index 解析失败', e); }
 
     // ===== 站内搜索 =====
     var input = document.getElementById('search-input');
@@ -92,11 +93,13 @@
           return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
         }).join('');
       }
-      // 兼容中文输入法（IME）：拼音组合过程中不搜索，组词结束后再搜，避免“无匹配”一闪而过
-      var composing = false;
-      input.addEventListener('compositionstart', function () { composing = true; });
-      input.addEventListener('compositionend', function (e) { composing = false; doSearch(e.target.value); });
-      input.addEventListener('input', function (e) { if (composing) return; doSearch(e.target.value); });
+      // 兼容中文输入法：组词过程中（isComposing）不搜，用浏览器原生标志避免标记卡死；组词结束或按回车再搜
+      input.addEventListener('input', function (e) {
+        if (e.isComposing || e.keyCode === 229) return;
+        doSearch(e.target.value);
+      });
+      input.addEventListener('compositionend', function () { doSearch(input.value); });
+      input.addEventListener('search', function () { doSearch(input.value); }); // type=search 按回车/清除按钮触发
     }
       document.addEventListener('click', function (e) {
         if (!e.target.closest('.search-wrap')) results.innerHTML = '';
