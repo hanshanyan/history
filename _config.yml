@@ -2,6 +2,11 @@ title: 寒山唁的历史研究资料库
 description: 寒山唁的历史研究资料库，使用 Obsidian 写作、Git 同步、GitHub Pages 发布。
 markdown: kramdown
 
+# 让单换行渲染为 <br>（硬换行），与 Obsidian 默认显示一致。
+# 否则 kramdown 会把单独换行当成空格，导致笔记里的分行在网页上被压平。
+kramdown:
+  hard_wrap: true
+
 # 站点部署在 https://hanshanyan.github.io/history/ ，baseurl 必须设为 /history，
 # 否则站内链接（搜索结果、wikilink）会指向根域名而 404。
 baseurl: /history
