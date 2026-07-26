@@ -13,3 +13,12 @@
 .center { text-align: center; }
 .note   { border-left: 4px solid #284b63; padding: 8px 12px; background: #f6f8fa; }
 .warn   { border-left: 4px solid #e53935; padding: 8px 12px; background: #fdecea; }
+
+// —— 字体样式工具类（<span class="bold">文本</span> 等） ——
+.bold      { font-weight: 700; }
+.italic    { font-style: italic; }
+.underline { text-decoration: underline; }
+.strike    { text-decoration: line-through; }
+.small     { font-size: 0.85em; }
+.large     { font-size: 1.2em; }
+.mono      { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
