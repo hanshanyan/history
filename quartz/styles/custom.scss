@@ -71,3 +71,13 @@
 @media (max-width: 768px) {
   .chron-cols { grid-template-columns: 1fr; }
 }
+
+// —— 右侧栏已清空（图谱/目录/反链已移到左侧），桌面端收掉右侧 320px 轨道，让文章列更宽 ——
+@media (min-width: 1200px) {
+  .page > #quartz-body {
+    grid-template-columns: 320px auto 0;
+  }
+  .page > #quartz-body > .sidebar.right {
+    display: none;
+  }
+}
