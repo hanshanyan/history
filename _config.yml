@@ -2,6 +2,16 @@ title: 寒山唁的历史研究资料库
 description: 寒山唁的历史研究资料库，使用 Obsidian 写作、Git 同步、GitHub Pages 发布。
 markdown: kramdown
 
+# 站点部署在 https://hanshanyan.github.io/history/ ，baseurl 必须设为 /history，
+# 否则站内链接（wikilink、搜索结果）会指向根域名而 404。
+baseurl: /history
+
+# 把 sources 设为集合：笔记会被 Jekyll 渲染成独立页面，wikilink 插件才能识别并链接。
+collections:
+  sources:
+    output: true
+    permalink: /sources/:name/
+
 # 不依赖任何外部 theme，避免 gem 依赖问题导致构建失败
 exclude:
   - .obsidian

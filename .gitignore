@@ -3,6 +3,7 @@
 .obsidian/workspace-mobile.json
 .obsidian/hotkeys.json
 .obsidian/cache
+.obsidian/plugins/*/data.json
 
 # Obsidian 回收站
 .trash/

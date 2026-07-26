@@ -34,11 +34,62 @@
     table { border-collapse: collapse; width: 100%; margin: 1em 0; }
     th, td { border: 1px solid #e0e0e0; padding: 6px 12px; }
     th { background: #f5f5f5; }
+
+    /* ===== 站点头部与搜索框 ===== */
+    .site-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .site-header .brand { font-weight: 700; font-size: 1.1rem; }
+    .site-header .brand a { color: #24292f; }
+    .search-wrap { position: relative; flex: 1; min-width: 220px; }
+    #search-input { width: 100%; padding: 8px 12px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+    #search-results { list-style: none; margin: 4px 0 0; padding: 0; position: absolute; left: 0; right: 0; background: #fff; border: 1px solid #d0d7de; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.08); max-height: 320px; overflow: auto; z-index: 10; }
+    #search-results li a { display: block; padding: 8px 12px; color: #24292f; }
+    #search-results li a:hover { background: #f6f8fa; }
+    #search-results .no-res { padding: 8px 12px; color: #757575; }
+
+    /* ===== wikilink 断链提示 ===== */
+    .wikilink-missing { color: #b42318; border-bottom: 1px dotted #b42318; }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <span class="brand"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></span>
+    <div class="search-wrap">
+      <input type="search" id="search-input" placeholder="搜索笔记…" autocomplete="off">
+      <ul id="search-results"></ul>
+    </div>
+  </header>
   <main>
     {{ content }}
   </main>
+  <script>
+    const SEARCH_URL = "{{ '/search.json' | relative_url }}";
+    (function () {
+      const input = document.getElementById('search-input');
+      const results = document.getElementById('search-results');
+      if (!input || !results) return;
+      let DATA = null;
+      function load() {
+        if (DATA) return Promise.resolve(DATA);
+        return fetch(SEARCH_URL).then(function (r) { return r.json(); }).then(function (d) { DATA = d; return DATA; });
+      }
+      input.addEventListener('input', function (e) {
+        const q = e.target.value.trim().toLowerCase();
+        if (!q) { results.innerHTML = ''; return; }
+        load().then(function (data) {
+          const hits = data.filter(function (d) {
+            return (d.title && d.title.toLowerCase().indexOf(q) > -1) ||
+                   (d.excerpt && d.excerpt.toLowerCase().indexOf(q) > -1);
+          }).slice(0, 10);
+          if (!hits.length) { results.innerHTML = '<li class="no-res">无匹配结果</li>'; return; }
+          results.innerHTML = hits.map(function (h) {
+            return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
+          }).join('');
+        }).catch(function () { results.innerHTML = '<li class="no-res">搜索加载失败</li>'; });
+      });
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.search-wrap')) results.innerHTML = '';
+      });
+    })();
+  </script>
 </body>
 </html>
