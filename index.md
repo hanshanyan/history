@@ -1,13 +1,12 @@
+
+
+寒山唁的历史研究资料库
+
 ---
-layout: default
-title: 寒山唁的历史研究资料库
----
 
-# 寒山唁的历史研究资料库
+## 📜 原始史料
 
-下列为已发布的笔记：
-
-{% assign notes = site.sources | where_exp: "item", "item.name != 'README'" %}
-{% for note in notes %}
-- [{{ note.first_h1 | default: note.name }}]({{ note.url | relative_url }})
-{% endfor %}
+| 标题                           | 作者  | 时间   | 出处    |
+| ---------------------------- | --- | ---- | ----- |
+| [《敖山庙伏击》](./sources/ao-shan-miao.md)   | 刘显宜 | 1958 | 星火燎原一 |
+| [《七溪岭战斗》](./sources/qi-xi-ling.md) | 陈士渠 | 1958 | 星火燎原一 |
