@@ -1,0 +1,75 @@
+/* 兼容 Obsidian 排版的 GitHub Pages 样式 */
+:root {
+  --text: #24292f;
+  --bg: #ffffff;
+  --link: #185fa5;
+  --mark: #fff3a3;
+  --border: #d0d7de;
+  --muted: #57606a;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  line-height: 1.75;
+  background: var(--bg);
+  margin: 0;
+}
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2.5em 1.2em 4em;
+}
+h1, h2, h3, h4 { line-height: 1.3; margin-top: 1.6em; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; height: auto; }
+
+/* 居中：兼容 Obsidian 的 <center> 写法（GitHub Pages 静态站会原样渲染） */
+center { display: block; text-align: center; }
+.center { text-align: center; }
+.center img { display: block; margin: 0 auto; }
+
+/* 高亮：<mark> 标签，以及 Obsidian ==高亮==（由 _plugins 转换而来） */
+mark {
+  background: var(--mark);
+  padding: 0 .25em;
+  border-radius: 3px;
+}
+
+/* Wikilink（由 _plugins 生成的内部链接） */
+.wikilink { color: var(--link); }
+.wikilink.missing {
+  color: #b35900;
+  border-bottom: 1px dotted #b35900;
+}
+
+/* 代码块 */
+pre {
+  background: #f6f8fa;
+  padding: 1em;
+  border-radius: 8px;
+  overflow: auto;
+}
+code { background: #f6f8fa; padding: .15em .35em; border-radius: 4px; font-size: .92em; }
+pre code { background: none; padding: 0; }
+
+/* 引用块 */
+blockquote {
+  border-left: 4px solid var(--border);
+  margin: 1em 0;
+  padding: .4em 1em;
+  color: var(--muted);
+  background: #f6f8fa;
+}
+
+/* GitHub Alert / Obsidian callout 风格统一 */
+.markdown-alert {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--link);
+  border-radius: 6px;
+  padding: .8em 1em;
+  margin: 1em 0;
+  background: #f6f8fa;
+}
+.markdown-alert .markdown-alert-title { font-weight: 600; }
