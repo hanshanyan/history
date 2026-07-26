@@ -3,14 +3,13 @@ description: 寒山唁的历史研究资料库，使用 Obsidian 写作、Git �
 markdown: kramdown
 
 # 站点部署在 https://hanshanyan.github.io/history/ ，baseurl 必须设为 /history，
-# 否则站内链接（wikilink、搜索结果）会指向根域名而 404。
+# 否则站内链接（搜索结果、wikilink）会指向根域名而 404。
 baseurl: /history
 
-# 把 sources 设为集合：笔记会被 Jekyll 渲染成独立页面，wikilink 插件才能识别并链接。
-collections:
-  sources:
-    output: true
-    permalink: /sources/:name/
+# 说明：GitHub Pages 自带的 jekyll-build-pages（github-pages gem）会忽略 _config.yml 里的
+# collections 配置，因此 sources/ 下的笔记按“普通页面”处理（自动生成 /sources/xxx.html）。
+# 首页列表、搜索索引、wikilink 都通过 site.pages 过滤 path 包含 'sources/' 来实现，
+# 不依赖 collections 变量，也不依赖自定义 Ruby 插件（GitHub Pages 也不会执行插件）。
 
 # 不依赖任何外部 theme，避免 gem 依赖问题导致构建失败
 exclude:

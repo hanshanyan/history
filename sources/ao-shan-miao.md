@@ -1,4 +1,5 @@
 ---
+layout: default
 title: 敖山庙伏击
 ---
 

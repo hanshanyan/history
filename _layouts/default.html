@@ -61,35 +61,72 @@
   <main>
     {{ content }}
   </main>
+
+  <!-- 笔记索引：搜索与 wikilink 共用，由 Jekyll 在构建时从 site.pages 生成 -->
+  <script type="application/json" id="note-index">
+[
+{% assign notes = site.pages | where_exp: "p", "p.path contains 'sources/'" %}
+{% for p in notes %}  {"title": {{ p.title | jsonify }}, "url": "{{ p.url | relative_url }}", "excerpt": {{ p.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
+  </script>
+
   <script>
-    const SEARCH_URL = "{{ '/search.json' | relative_url }}";
-    (function () {
-      const input = document.getElementById('search-input');
-      const results = document.getElementById('search-results');
-      if (!input || !results) return;
-      let DATA = null;
-      function load() {
-        if (DATA) return Promise.resolve(DATA);
-        return fetch(SEARCH_URL).then(function (r) { return r.json(); }).then(function (d) { DATA = d; return DATA; });
-      }
+  (function () {
+    var indexEl = document.getElementById('note-index');
+    var DATA = indexEl ? JSON.parse(indexEl.textContent) : [];
+
+    // ===== 站内搜索 =====
+    var input = document.getElementById('search-input');
+    var results = document.getElementById('search-results');
+    if (input && results) {
       input.addEventListener('input', function (e) {
-        const q = e.target.value.trim().toLowerCase();
+        var q = e.target.value.trim().toLowerCase();
         if (!q) { results.innerHTML = ''; return; }
-        load().then(function (data) {
-          const hits = data.filter(function (d) {
-            return (d.title && d.title.toLowerCase().indexOf(q) > -1) ||
-                   (d.excerpt && d.excerpt.toLowerCase().indexOf(q) > -1);
-          }).slice(0, 10);
-          if (!hits.length) { results.innerHTML = '<li class="no-res">无匹配结果</li>'; return; }
-          results.innerHTML = hits.map(function (h) {
-            return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
-          }).join('');
-        }).catch(function () { results.innerHTML = '<li class="no-res">搜索加载失败</li>'; });
+        var hits = DATA.filter(function (d) {
+          return (d.title && d.title.toLowerCase().indexOf(q) > -1) ||
+                 (d.excerpt && d.excerpt.toLowerCase().indexOf(q) > -1);
+        }).slice(0, 10);
+        if (!hits.length) { results.innerHTML = '<li class="no-res">无匹配结果</li>'; return; }
+        results.innerHTML = hits.map(function (h) {
+          return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
+        }).join('');
       });
       document.addEventListener('click', function (e) {
         if (!e.target.closest('.search-wrap')) results.innerHTML = '';
       });
-    })();
+    }
+
+    // ===== wikilink：把正文中的 [[标题]] 转换为站内链接 =====
+    var map = {};
+    DATA.forEach(function (n) { if (n.title) map[n.title] = n.url; });
+    var main = document.querySelector('main');
+    if (main) {
+      var re = /\[\[([^\]]+)\]\]/g;
+      var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (node) {
+          if (!node.nodeValue || node.nodeValue.indexOf('[[') === -1) return NodeFilter.FILTER_REJECT;
+          var p = node.parentNode;
+          if (p && (p.tagName === 'CODE' || p.tagName === 'PRE' || p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }, false);
+      var targets = [];
+      while (walker.nextNode()) targets.push(walker.currentNode);
+      targets.forEach(function (textNode) {
+        var html = textNode.nodeValue.replace(re, function (m, title) {
+          title = title.trim();
+          if (map[title]) return '<a href="' + map[title] + '">' + title + '</a>';
+          return '<span class="wikilink-missing" title="未找到对应笔记">' + m + '</span>';
+        });
+        if (html !== textNode.nodeValue) {
+          var span = document.createElement('span');
+          span.innerHTML = html;
+          textNode.parentNode.replaceChild(span, textNode);
+        }
+      });
+    }
+  })();
   </script>
 </body>
 </html>

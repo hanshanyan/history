@@ -1,4 +1,5 @@
 ---
+layout: default
 title: 七溪岭战斗
 ---
 

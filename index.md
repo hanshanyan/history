@@ -7,6 +7,7 @@ title: 寒山唁的历史研究资料库
 
 # 📜原始史料
 
-{% for note in site.sources %}
+{% assign notes = site.pages | where_exp: "p", "p.path contains 'sources/'" %}
+{% for note in notes %}
 - [{{ note.title }}]({{ note.url | relative_url }})
 {% endfor %}
