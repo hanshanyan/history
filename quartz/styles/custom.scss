@@ -42,53 +42,36 @@
 // 注意：不要用 .center 作“文字居中”工具类，它会与布局的 .center 冲突导致全文居中；
 //       需要文字居中请用 .text-center（已定义）。
 
-// —— 年谱三栏平行布局（官方大事件 / 甲谱 / 乙谱） ——
-// 用法：<div class="chron-cols"><div class="chron-col"><h4>标题</h4><ul>...</ul></div> ×3 </div>
-.chron-cols {
+// —— 年谱三栏平行布局（官方大事件 / 鹤谱 / 德谱）—— 每栏一个谱，纵向独立排列 ——
+// 用法：<div class="chronology"><div>\n\n### 谱名\n\n条目…\n\n</div> ×3 </div>
+// 注意：<div> 开标签后需空一行，Quartz 才恢复 Markdown 解析（标题/段落才会生效）
+.chronology {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 1.25rem 0;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
 }
-.chron-col {
+.chronology > div {
   border: 1px solid var(--lightgray, #e6e6e6);
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 1rem;
   background: var(--light, #fafafa);
 }
-.chron-col > h4 {
-  margin: 0 0 0.5rem;
-  font-size: 0.95rem;
+.chronology > div > h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
   font-weight: 600;
+  text-align: center;
   border-bottom: 1px solid var(--lightgray, #e6e6e6);
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.5rem;
 }
-.chron-col > ul {
-  margin: 0;
-  padding-left: 1.1rem;
-}
-.chron-col > ul > li {
-  margin: 0.25rem 0;
-  line-height: 1.6;
+.chronology > div > p {
+  margin: 0.45rem 0;
+  line-height: 1.7;
 }
 // 窄屏自动堆叠为单列，避免挤压
 @media (max-width: 768px) {
-  .chron-cols { grid-template-columns: 1fr; }
-}
-
-// 年谱：按日期段分组的横向分隔带（每条带 = 一个日期段标题 + 下方三栏）
-// 用法：<div class="chron-band">2.3</div> 紧跟 <div class="chron-cols">…</div>
-// 用 div 而非 ### 标题，避免污染目录(TOC)；同日期段被归在同一水平行。
-.chron-band {
-  margin: 1.6rem 0 0.5rem;
-  font-weight: 700;
-  font-size: 1.05rem;
-  line-height: 1.4;
-  padding: 0.35rem 0.7rem;
-  border-left: 4px solid var(--secondary, #888);
-  background: var(--light, #f3f3f3);
-  border-radius: 4px;
-  color: var(--dark, #222);
+  .chronology { grid-template-columns: 1fr; }
 }
 
 // —— 右侧栏已清空（图谱已移到正文底部），桌面端收掉右侧 320px 轨道，让文章列更宽 ——
