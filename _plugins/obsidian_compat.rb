@@ -32,6 +32,11 @@ Jekyll::Hooks.register [:pages, :posts, :documents], :pre_render do |doc, _paylo
   content = doc.content.to_s
   base    = (doc.site.config['baseurl'] || '').to_s
 
+  # 0) 提取首个 H1 作为标题，供首页列表使用
+  if content =~ /\A\s*#\s+(.+)$/
+    doc.data['first_h1'] = $1.strip
+  end
+
   # 1) 暂存代码块（围栏 ``` 与行内 `），避免误替换
   code_blocks = []
   content = content.gsub(/```.*?```/m) { |m| code_blocks << m; "\u0000#{code_blocks.size - 1}\u0000" }
