@@ -1,7 +1,6 @@
 # History
 
 欢迎来到寒山唁的个人历史研究资料库。
-测试 Obsidian Git
 
 ---
 
