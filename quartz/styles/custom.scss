@@ -1,0 +1,15 @@
+@use "./base.scss";
+
+// put your custom CSS here!
+
+// —— 兼容 Obsidian 颜色 / 对齐工具类 ——
+.red    { color: #e53935; }
+.blue   { color: #1e88e5; }
+.green  { color: #2e7d32; }
+.orange { color: #fb8c00; }
+.purple { color: #8e24aa; }
+.gray   { color: #757575; }
+.hl, .mark { background: #fff59d; padding: 0 2px; border-radius: 2px; }
+.center { text-align: center; }
+.note   { border-left: 4px solid #284b63; padding: 8px 12px; background: #f6f8fa; }
+.warn   { border-left: 4px solid #e53935; padding: 8px 12px; background: #fdecea; }

@@ -11,3 +11,8 @@
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# Quartz 构建产物（不纳入版本控制）
+node_modules/
+public/
+.quartz-cache/
