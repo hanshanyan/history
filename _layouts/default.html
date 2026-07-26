@@ -76,7 +76,9 @@
   <!-- 笔记索引：搜索与 wikilink 共用，由 Jekyll 在构建时从 site.pages 生成 -->
   <script type="application/json" id="note-index">
 [
-{% assign notes = site.pages | where_exp: "p", "p.path contains 'sources/' or p.path contains 'narrative/'" %}
+{% assign notes_src = site.pages | where_exp: "p", "p.path contains 'sources/'" %}
+{% assign notes_nar = site.pages | where_exp: "p", "p.path contains 'narrative/'" %}
+{% assign notes = notes_src | concat: notes_nar %}
 {% for p in notes %}  {"title": {{ p.title | jsonify }}, "url": "{{ p.url | relative_url }}", "excerpt": {{ p.content | strip_html | strip_newlines | truncatewords: 30 | jsonify }}}{% unless forloop.last %},{% endunless %}
 {% endfor %}
 ]
