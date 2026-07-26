@@ -5,7 +5,7 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [],
-  afterBody: [],
+  afterBody: [Component.Graph()],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/hanshanyan/history",
@@ -41,7 +41,6 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer({ folderClickBehavior: "collapse" }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
-    Component.Graph(),
   ],
   right: [],
 }

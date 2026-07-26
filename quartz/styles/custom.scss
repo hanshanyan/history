@@ -76,7 +76,7 @@
   .chron-cols { grid-template-columns: 1fr; }
 }
 
-// —— 右侧栏已清空（图谱/目录/反链已移到左侧），桌面端收掉右侧 320px 轨道，让文章列更宽 ——
+// —— 右侧栏已清空（图谱已移到正文底部），桌面端收掉右侧 320px 轨道，让文章列更宽 ——
 @media (min-width: 1200px) {
   .page > #quartz-body {
     grid-template-columns: 320px auto 0;
@@ -84,12 +84,36 @@
   .page > #quartz-body > .sidebar.right {
     display: none;
   }
-  // 左侧栏内容可能很高（探索+目录+反链+图谱叠加），强制内部滚动，
-  // 否则超出 100vh 的部分被裁切、永远滚不到——探索展开后的分录、反向链接都出不来
+  // 整个左栏作为【唯一】滚动容器
   .page > #quartz-body > .sidebar.left {
     height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+  // 关键：禁止左栏子项被 flex 压缩——否则探索/目录会被压成一条缝，
+  //       各自开出“很窄的内部小滚动框”，看起来就像点不开、滑不动
+  .page > #quartz-body > .sidebar.left > * {
+    flex-shrink: 0;
+  }
+  // 关掉探索/目录/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见
+  .page > #quartz-body > .sidebar.left div:has(> .overflow),
+  .page > #quartz-body > .sidebar.left .explorer-content,
+  .page > #quartz-body > .sidebar.left ul.toc-content.overflow,
+  .page > #quartz-body > .sidebar.left .backlinks > ul.overflow {
+    overflow: visible;
+    max-height: none;
+  }
+}
+
+// —— 关系图谱移到正文底部居中（与 footer 相邻） ——
+.center > .graph {
+  max-width: 760px;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lightgray, #e6e6e6);
+
+  & > .graph-outer {
+    height: 320px;
   }
 }
