@@ -80,8 +80,8 @@
     var input = document.getElementById('search-input');
     var results = document.getElementById('search-results');
     if (input && results) {
-      input.addEventListener('input', function (e) {
-        var q = e.target.value.trim().toLowerCase();
+      function doSearch(raw) {
+        var q = (raw || '').trim().toLowerCase();
         if (!q) { results.innerHTML = ''; return; }
         var hits = DATA.filter(function (d) {
           return (d.title && d.title.toLowerCase().indexOf(q) > -1) ||
@@ -91,7 +91,13 @@
         results.innerHTML = hits.map(function (h) {
           return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
         }).join('');
-      });
+      }
+      // 兼容中文输入法（IME）：拼音组合过程中不搜索，组词结束后再搜，避免“无匹配”一闪而过
+      var composing = false;
+      input.addEventListener('compositionstart', function () { composing = true; });
+      input.addEventListener('compositionend', function (e) { composing = false; doSearch(e.target.value); });
+      input.addEventListener('input', function (e) { if (composing) return; doSearch(e.target.value); });
+    }
       document.addEventListener('click', function (e) {
         if (!e.target.closest('.search-wrap')) results.innerHTML = '';
       });
