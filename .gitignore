@@ -1,6 +1,7 @@
 # Obsidian 本地状态（频繁变动、机器相关，不纳入版本控制）
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
+.obsidian/hotkeys.json
 .obsidian/cache
 
 # Obsidian 回收站

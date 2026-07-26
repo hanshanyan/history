@@ -1,39 +1,8 @@
 title: 寒山唁的历史研究资料库
-description: 由 Obsidian 笔记经 Jekyll 构建的 GitHub Pages 站点
-# 使用 kramdown + GitHub Flavored Markdown 解析，兼容表格/任务列表/删除线
+description: 寒山唁的历史研究资料库，使用 Obsidian 写作、Git 同步、GitHub Pages 发布。
 markdown: kramdown
-kramdown:
-  input: GFM
-  hard_wrap: false
-  syntax_highlighter: rouge
 
-# baseurl 留空，由 GitHub Actions 构建时通过 --baseurl 自动注入（项目站点为 /history）
-# 本地构建时同样留空即可
-
-# 把 sources/ 设为集合，强制处理其中的 .md（无需逐个加 front matter）
-collections:
-  sources:
-    output: true
-    permalink: /sources/:name.html
-
-# 排除 Obsidian 内部文件与构建用文件，不发布
+# 不依赖任何外部 theme，避免 gem 依赖问题导致构建失败
 exclude:
-  - .obsidian/
-  - .git/
-  - .gitignore
-  - Gemfile
-  - Gemfile.lock
+  - .obsidian
   - README.md
-  - push-to-github.sh
-
-# 默认布局：所有页面/集合文档统一套用
-defaults:
-  - scope:
-      path: ""
-      type: sources
-    values:
-      layout: "default"
-  - scope:
-      path: ""
-    values:
-      layout: "default"
