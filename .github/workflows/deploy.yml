@@ -23,14 +23,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 22
-          cache: npm
+          node-version: "22"
       - name: Install dependencies
         run: npm ci
       - name: Build Quartz
-        run: npm run build
+        run: node quartz/bootstrap-cli.mjs build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
