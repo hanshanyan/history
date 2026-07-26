@@ -4,7 +4,6 @@ title: 方顺安：我秘密受命为林彪开车
 aliases:
   - 工作人员
 ---
-# 我秘密受命为林彪开车
 <p align="center">方顺安</p>
 
 [来源｜世纪杂志  方顺安/口述 沈飞德/采访 史怡婷/整理](https://mp.weixin.qq.com/s/n5oNnUz1lqRG-bzPE6opqg)
