@@ -22,3 +22,12 @@
 .small     { font-size: 0.85em; }
 .large     { font-size: 1.2em; }
 .mono      { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+// —— 文章容器左起（覆盖 Quartz 默认 margin:0 auto 的整体居中） ——
+// 方案A：保留阅读宽度，整页靠屏幕左侧
+.page {
+  margin-left: 0;
+  margin-right: auto;
+}
+// 方案B：占满全宽（如需要，注释掉方案A、启用下面两行）
+// .page { max-width: none; margin: 0; }
