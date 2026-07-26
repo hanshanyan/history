@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 原始史料
+title: 史料索引
 ---
 
 # 原始史料
