@@ -37,3 +37,37 @@
 }
 // 注意：不要用 .center 作“文字居中”工具类，它会与布局的 .center 冲突导致全文居中；
 //       需要文字居中请用 .text-center（已定义）。
+
+// —— 年谱三栏平行布局（官方大事件 / 甲谱 / 乙谱） ——
+// 用法：<div class="chron-cols"><div class="chron-col"><h4>标题</h4><ul>...</ul></div> ×3 </div>
+.chron-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+.chron-col {
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: var(--light, #fafafa);
+}
+.chron-col > h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--lightgray, #e6e6e6);
+  padding-bottom: 0.4rem;
+}
+.chron-col > ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.chron-col > ul > li {
+  margin: 0.25rem 0;
+  line-height: 1.6;
+}
+// 窄屏自动堆叠为单列，避免挤压
+@media (max-width: 768px) {
+  .chron-cols { grid-template-columns: 1fr; }
+}
