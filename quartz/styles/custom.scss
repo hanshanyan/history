@@ -32,12 +32,12 @@
 // 2) 内容列也贴左：必须匹配 base.scss 的选择器特异性，
 //    才能盖过 .page > #quartz-body .center { margin-left:auto; margin-right:auto }
 .page > #quartz-body .center {
+  box-sizing: border-box; // 关键：让下面 padding 收进 100% 宽度内，否则内容会溢出到右边缘
   margin-left: 0;
   margin-right: 0;
-  // 右侧留白：避免文章贴到右边缘；
-  // 左侧在 320px 侧栏之后也补一点内距，使左右观感平衡
-  padding-left: 1rem;
-  padding-right: clamp(1.5rem, 4vw, 4rem);
+  // 左右对称留白，给文章呼吸感；左 1.5rem + 侧栏自身 2rem 内距，右略大
+  padding-left: 1.5rem;
+  padding-right: clamp(2rem, 5vw, 5rem);
 }
 // 注意：不要用 .center 作“文字居中”工具类，它会与布局的 .center 冲突导致全文居中；
 //       需要文字居中请用 .text-center（已定义）。
@@ -84,9 +84,12 @@
   .page > #quartz-body > .sidebar.right {
     display: none;
   }
-  // 左侧栏内容超出视口时允许滚动，确保探索/目录/反向链接/图谱都能展开看到
+  // 左侧栏内容可能很高（探索+目录+反链+图谱叠加），强制内部滚动，
+  // 否则超出 100vh 的部分被裁切、永远滚不到——探索展开后的分录、反向链接都出不来
   .page > #quartz-body > .sidebar.left {
+    height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }
