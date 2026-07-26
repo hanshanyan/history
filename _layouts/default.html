@@ -46,6 +46,11 @@
     #search-results li a:hover { background: #f6f8fa; }
     #search-results .no-res { padding: 8px 12px; color: #757575; }
 
+    /* 搜索模式切换 + 加载状态 */
+    .search-modes { display: flex; gap: .75rem; margin: 6px 0 0; font-size: 13px; color: #57606a; }
+    .search-modes label { cursor: pointer; user-select: none; }
+    .search-status { font-size: 12px; color: #8c959f; margin-left: auto; }
+
     /* ===== wikilink 断链提示 ===== */
     .wikilink-missing { color: #b42318; border-bottom: 1px dotted #b42318; }
   </style>
@@ -55,6 +60,12 @@
     <span class="brand"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></span>
     <div class="search-wrap">
       <input type="search" id="search-input" placeholder="搜索笔记…" autocomplete="off">
+      <div class="search-modes">
+        <label><input type="radio" name="search-mode" value="all" checked> 全部</label>
+        <label><input type="radio" name="search-mode" value="title"> 仅标题</label>
+        <label><input type="radio" name="search-mode" value="body"> 仅正文</label>
+        <span id="search-status" class="search-status"></span>
+      </div>
       <ul id="search-results"></ul>
     </div>
   </header>
@@ -77,64 +88,87 @@
     var DATA = [];
     try { DATA = indexEl ? JSON.parse(indexEl.textContent) : []; } catch (e) { console.error('note-index 解析失败', e); }
 
-    // ===== 站内搜索 =====
+    // 加载状态角标：硬刷新后能看到「已索引 N 篇」即证明本版代码已生效
+    var statusEl = document.getElementById('search-status');
+    if (statusEl) statusEl.textContent = '已索引 ' + DATA.length + ' 篇';
+
     var input = document.getElementById('search-input');
     var results = document.getElementById('search-results');
-    if (input && results) {
-      function doSearch(raw) {
-        var q = (raw || '').trim().toLowerCase();
-        if (!q) { results.innerHTML = ''; return; }
-        var hits = DATA.filter(function (d) {
-          return (d.title && d.title.toLowerCase().indexOf(q) > -1) ||
-                 (d.excerpt && d.excerpt.toLowerCase().indexOf(q) > -1);
-        }).slice(0, 10);
-        if (!hits.length) { results.innerHTML = '<li class="no-res">无匹配结果</li>'; return; }
-        results.innerHTML = hits.map(function (h) {
-          return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
-        }).join('');
+    var modeRadios = document.querySelectorAll('input[name="search-mode"]');
+
+    function currentMode() {
+      var m = 'all';
+      if (modeRadios) {
+        for (var i = 0; i < modeRadios.length; i++) { if (modeRadios[i].checked) m = modeRadios[i].value; }
       }
-      // 兼容中文输入法：组词过程中（isComposing）不搜，用浏览器原生标志避免标记卡死；组词结束或按回车再搜
-      input.addEventListener('input', function (e) {
-        if (e.isComposing || e.keyCode === 229) return;
-        doSearch(e.target.value);
-      });
-      input.addEventListener('compositionend', function () { doSearch(input.value); });
-      input.addEventListener('search', function () { doSearch(input.value); }); // type=search 按回车/清除按钮触发
+      return m;
     }
+
+    function doSearch(raw) {
+      if (!results) return;
+      var q = (raw || '').trim().toLowerCase();
+      if (!q) { results.innerHTML = ''; return; }
+      var mode = currentMode();
+      var hits = DATA.filter(function (d) {
+        var inTitle = d.title && d.title.toLowerCase().indexOf(q) > -1;
+        var inBody  = d.excerpt && d.excerpt.toLowerCase().indexOf(q) > -1;
+        if (mode === 'title') return inTitle;
+        if (mode === 'body')  return inBody;
+        return inTitle || inBody;
+      }).slice(0, 20);
+      if (!hits.length) { results.innerHTML = '<li class="no-res">无匹配结果</li>'; return; }
+      results.innerHTML = hits.map(function (h) {
+        return '<li><a href="' + h.url + '">' + h.title + '</a></li>';
+      }).join('');
+    }
+
+    if (input && results) {
+      // 触发时机尽量全面：输入（非组词中）、组词结束、按回车、点清除按钮、切换模式
+      input.addEventListener('input', function (e) { if (e.isComposing) return; doSearch(e.target.value); });
+      input.addEventListener('compositionend', function () { doSearch(input.value); });
+      input.addEventListener('search', function () { doSearch(input.value); });
+      input.addEventListener('keyup', function (e) { if (e.key === 'Enter') doSearch(input.value); });
+      if (modeRadios) {
+        for (var i = 0; i < modeRadios.length; i++) {
+          modeRadios[i].addEventListener('change', function () { doSearch(input.value); });
+        }
+      }
       document.addEventListener('click', function (e) {
         if (!e.target.closest('.search-wrap')) results.innerHTML = '';
       });
     }
 
-    // ===== wikilink：把正文中的 [[标题]] 转换为站内链接 =====
-    var map = {};
-    DATA.forEach(function (n) { if (n.title) map[n.title] = n.url; });
-    var main = document.querySelector('main');
-    if (main) {
-      var re = /\[\[([^\]]+)\]\]/g;
-      var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
-        acceptNode: function (node) {
-          if (!node.nodeValue || node.nodeValue.indexOf('[[') === -1) return NodeFilter.FILTER_REJECT;
-          var p = node.parentNode;
-          if (p && (p.tagName === 'CODE' || p.tagName === 'PRE' || p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
-          return NodeFilter.FILTER_ACCEPT;
-        }
-      }, false);
-      var targets = [];
-      while (walker.nextNode()) targets.push(walker.currentNode);
-      targets.forEach(function (textNode) {
-        var html = textNode.nodeValue.replace(re, function (m, title) {
-          title = title.trim();
-          if (map[title]) return '<a href="' + map[title] + '">' + title + '</a>';
-          return '<span class="wikilink-missing" title="未找到对应笔记">' + m + '</span>';
+    // ===== wikilink：把正文中的 [[标题]] 转换为站内链接（独立 try，失败不影响搜索） =====
+    try {
+      var map = {};
+      for (var j = 0; j < DATA.length; j++) { if (DATA[j].title) map[DATA[j].title] = DATA[j].url; }
+      var main = document.querySelector('main');
+      if (main) {
+        var re = /\[\[([^\]]+)\]\]/g;
+        var walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!node.nodeValue || node.nodeValue.indexOf('[[') === -1) return NodeFilter.FILTER_REJECT;
+            var p = node.parentNode;
+            if (p && (p.tagName === 'CODE' || p.tagName === 'PRE' || p.tagName === 'A' || p.tagName === 'SCRIPT' || p.tagName === 'STYLE')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        }, false);
+        var targets = [];
+        while (walker.nextNode()) targets.push(walker.currentNode);
+        targets.forEach(function (textNode) {
+          var html = textNode.nodeValue.replace(re, function (m, title) {
+            title = title.trim();
+            if (map[title]) return '<a href="' + map[title] + '">' + title + '</a>';
+            return '<span class="wikilink-missing" title="未找到对应笔记">' + m + '</span>';
+          });
+          if (html !== textNode.nodeValue) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            textNode.parentNode.replaceChild(span, textNode);
+          }
         });
-        if (html !== textNode.nodeValue) {
-          var span = document.createElement('span');
-          span.innerHTML = html;
-          textNode.parentNode.replaceChild(span, textNode);
-        }
-      });
-    }
+      }
+    } catch (e) { console.error('wikilink 转换失败', e); }
   })();
   </script>
 </body>
