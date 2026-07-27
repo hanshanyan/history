@@ -1,3 +1,180 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+// —— 兼容 Obsidian 颜色 / 对齐工具类 ——
+.red    { color: #e53935; }
+.blue   { color: #1e88e5; }
+.green  { color: #2e7d32; }
+.orange { color: #fb8c00; }
+.purple { color: #8e24aa; }
+.gray   { color: #757575; }
+.hl, .mark { background: #fff59d; padding: 0 2px; border-radius: 2px; }
+.text-center { text-align: center; }
+.note   { border-left: 4px solid #284b63; padding: 8px 12px; background: #f6f8fa; }
+.warn   { border-left: 4px solid #e53935; padding: 8px 12px; background: #fdecea; }
+
+// —— 字体样式工具类（<span class="bold">文本</span> 等） ——
+.bold      { font-weight: 700; }
+.italic    { font-style: italic; }
+.underline { text-decoration: underline; }
+.strike    { text-decoration: line-through; }
+.small     { font-size: 0.85em; }
+.large     { font-size: 1.2em; }
+.mono      { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+// —— 文章容器左起（覆盖 Quartz 默认在屏幕上整体居中） ——
+.page {
+  margin-left: 0;
+  margin-right: auto;
+}
+.page > #quartz-body .center {
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1.5rem;
+  padding-right: clamp(2rem, 5vw, 5rem);
+}
+// 注意：不要用 .center 作“文字居中”工具类（会与布局的 .center 冲突导致全文居中）；
+//       需要文字居中请用 .text-center（已定义）。
+
+// —— 年谱三栏平行布局（官方大事件 / 鹤谱 / 德谱）—— 每栏一个谱，纵向独立排列 ——
+.chronology {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.chronology > div {
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 8px;
+  padding: 0.75rem 1rem 1rem;
+  background: var(--light, #fafafa);
+}
+.chronology > div > h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid var(--lightgray, #e6e6e6);
+  padding-bottom: 0.5rem;
+}
+.chronology > div > p {
+  margin: 0.45rem 0;
+  line-height: 1.7;
+}
+@media (max-width: 768px) {
+  .chronology { grid-template-columns: 1fr; }
+}
+
+// —— 年谱「旧版」三栏（chron-cols / chron-col）：用于与 chronology 版并排对比 ——
+.chron-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.chron-col {
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 8px;
+  padding: 0.75rem 1rem 1rem;
+  background: var(--light, #fafafa);
+
+  & > h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid var(--lightgray, #e6e6e6);
+    padding-bottom: 0.5rem;
+  }
+  & > ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+  }
+  & > ul > li {
+    margin: 0.35rem 0;
+    line-height: 1.7;
+  }
+}
+@media (max-width: 768px) {
+  .chron-cols { grid-template-columns: 1fr; }
+}
+
+// —— 引用 callout（> [!quote]）：学术引用感——正文更小、弱化色，标题小号大写（已去斜体）——
+.callout[data-callout="quote"] .callout-content {
+  font-size: 0.85em;
+  line-height: 1.75;
+  color: var(--gray, #6b6b6b);
+}
+.callout[data-callout="quote"] .callout-title-inner {
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+// —— 关系图谱模块已移除（见 quartz.config.yaml 中 graph enabled:false） ——
+
+// —— 右侧栏已清空（仅图谱，已禁用）：桌面端收掉右侧轨道，让文章列更宽 ——
+@media all and ($desktop) {
+  .page > #quartz-body {
+    grid-template-columns: #{$sidePanelWidth} auto 0;
+  }
+  .page > #quartz-body > .right.sidebar {
+    display: none;
+  }
+  // 整个左栏作为【唯一】滚动容器
+  .page > #quartz-body > .left.sidebar {
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  // 关键：禁止左栏子项被 flex 压缩——否则探索/目录会被压成一条缝
+  .page > #quartz-body > .left.sidebar > * {
+    flex-shrink: 0;
+  }
+  // 关掉探索/目录/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见
+  .page > #quartz-body > .left.sidebar div:has(> .overflow),
+  .page > #quartz-body > .left.sidebar .explorer-content,
+  .page > #quartz-body > .left.sidebar ul.overflow,
+  .page > #quartz-body > .left.sidebar .backlinks > ul.overflow {
+    overflow: visible;
+    max-height: none;
+  }
+}
+
+// —— 搜索模式切换（全部 / 仅标题 / 仅正文）——
+// 该 UI 由本地分叉的 @quartz-community/search 插件渲染（见 quartz/plugins/search）
+.search-modes {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.5rem auto 0.25rem;
+  justify-content: center;
+}
+.search-modes .search-mode {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 6px;
+  background: var(--light, #fafafa);
+  color: var(--darkgray, #4e4e4e);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.search-modes .search-mode:hover {
+  border-color: var(--secondary, #284b63);
+}
+.search-modes .search-mode.active {
+  background: var(--highlight, rgba(143, 159, 169, 0.15));
+  border-color: var(--secondary, #284b63);
+  color: var(--secondary, #284b63);
+  font-weight: 600;
+}
+
+// —— 隐藏“X min read”阅读时长（保留日期）——
+// content-meta 结构为 <time>…</time><span>X min read</span>，
+// 其中唯一的 <span> 即阅读时长，故隐藏之。
+.content-meta > span {
+  display: none;
+}
