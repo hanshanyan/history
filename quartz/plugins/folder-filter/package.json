@@ -1,0 +1,32 @@
+{
+  "name": "folder-filter",
+  "version": "1.0.0",
+  "type": "module",
+  "quartz": {
+    "name": "folder-filter",
+    "displayName": "FolderFilter",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 25,
+    "defaultEnabled": true,
+    "defaultOptions": {},
+    "components": {
+      "FolderFilter": {
+        "displayName": "FolderFilter",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 25
+      }
+    }
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./components": "./dist/index.js"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0",
+    "@quartz-community/utils": "^0.1.0",
+    "@quartz-community/types": "^0.2.1"
+  }
+}

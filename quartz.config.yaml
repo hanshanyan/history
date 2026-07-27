@@ -206,6 +206,11 @@ plugins:
     layout:
       position: beforeBody
       priority: 30
+  - source: "./quartz/plugins/folder-filter"
+    enabled: true
+    layout:
+      position: beforeBody
+      priority: 25
   - source: "@quartz-community/page-title"
     enabled: true
     layout:
