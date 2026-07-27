@@ -30,13 +30,15 @@ var folderFilter_inline = "(function(){\n  function apply(){\n    var wrap = doc
 
 var FolderFilter_default = ((opts) => {
   const FolderFilter = ({ displayClass, cfg, fileData, allFiles }) => {
-    const current = (fileData?.slug ?? "");
-    if (current === "") return null;
+    let current = (fileData?.slug ?? "");
+    if (current.endsWith("/index")) current = current.slice(0, -"/index".length);
+    if (current === "" || current === "index") return null;
     const depth = current.split("/").length;
     const children = (allFiles ?? []).filter((f) => {
       const s = (f.slug ?? "");
       if (!s) return false;
       if (!s.startsWith(current + "/")) return false;
+      if (s === current + "/index") return false;
       return s.split("/").length === depth + 1;
     });
     if (children.length === 0) return null;
@@ -49,18 +51,18 @@ var FolderFilter_default = ((opts) => {
       const t = c.frontmatter?.title;
       if (t) data[t] = { author: c.frontmatter?.author || "", year: getYear(c.frontmatter?.publish) || "" };
     });
-    const mkSel = (label, key, vals) => u2("label", { class: "ff-label" }, [
+    const mkSel = (label, key, vals) => u2("label", { class: "ff-label", children: [
       label + " ",
-      u2("select", { class: "ff-select", "data-filter": key }, [
-        u2("option", { value: "" }, "全部"),
-        ...vals.map((v) => u2("option", { value: v }, v)),
-      ]),
-    ]);
-    return u2("div", { class: "folder-filter" + (displayClass ? " " + displayClass : "") }, [
+      u2("select", { class: "ff-select", "data-filter": key, children: [
+        u2("option", { value: "", children: ["全部"] }),
+        ...vals.map((v) => u2("option", { value: v, children: [v] })),
+      ] }),
+    ] });
+    return u2("div", { class: "folder-filter" + (displayClass ? " " + displayClass : ""), children: [
       authors.length ? mkSel("作者", "author", authors) : null,
       years.length ? mkSel("发表年份", "year", years) : null,
-      u2("script", { type: "application/json", id: "ff-data" }, JSON.stringify(data)),
-    ]);
+      u2("script", { type: "application/json", id: "ff-data", dangerouslySetInnerHTML: { __html: JSON.stringify(data) } }),
+    ] });
   };
   FolderFilter.css = folderFilter_css;
   FolderFilter.afterDOMLoaded = folderFilter_inline;

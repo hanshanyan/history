@@ -3,7 +3,7 @@ title: 王庆成：记林彪亲侄女林少华
 author: 记者
 tags:
   - 亲人
-  - 杂志文章
+  - 文类/杂志
   - 网页链接
 publish: 2011-01-01
 aliases:
