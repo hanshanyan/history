@@ -35,8 +35,7 @@ var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin
 .folder-table td a.internal{text-decoration:none}
 .folder-table td a.internal:hover{text-decoration:underline}
 .folder-table .tag-pill{display:inline-block;margin:0 .35rem .25rem 0;font-size:.85rem}
-.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}
-body .page-listing{display:none}`;
+.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}`;
 
 // client script (runs via afterDOMLoaded)
 var folderFilter_inline = `(function(){

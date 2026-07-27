@@ -3,9 +3,10 @@ title: 陈士渠：七溪岭战斗
 author: 陈士渠
 tags:
   - 井冈山
-  - 星火燎原
-  - 溯源/zlib
+  - 🏛zlib
 publish: 1958-08-01
+来源:
+  - 《星火燎原》
 aliases:
   - 陈士渠：七溪岭战斗
 ---

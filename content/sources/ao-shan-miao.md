@@ -3,9 +3,10 @@ title: 刘显宜：敖山庙伏击
 author: 刘显宜
 tags:
   - 井冈山
-  - 星火燎原
-  - 溯源/zlib
+  - 🏛zlib
 publish: 1958-08-01
+来源:
+  - 《星火燎原》
 aliases:
   - 刘显宜：敖山庙伏击
 ---
