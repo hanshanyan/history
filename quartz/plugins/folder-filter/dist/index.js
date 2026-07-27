@@ -167,7 +167,8 @@ var FolderFilter_default = ((opts) => {
       const fm = c.frontmatter ?? {};
       const title = fm.title || c.slug;
       const author = fm.author || "";
-      const source = fm.source || "";
+      const rawSource = fm.source ?? fm["来源"] ?? fm["source"];
+      const source = Array.isArray(rawSource) ? rawSource.join("、") : (rawSource || "");
       const tags = (fm.tags ?? []).filter(Boolean);
       const dateVal = fm.publish;
       const dateStr = formatDate(dateVal, locale);
