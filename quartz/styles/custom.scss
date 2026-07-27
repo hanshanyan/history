@@ -74,6 +74,41 @@
   .chronology { grid-template-columns: 1fr; }
 }
 
+// —— 年谱「旧版」三栏（chron-cols / chron-col）：用于与 chronology 版并排对比 ——
+// 用法：<div class="chron-cols"><div class="chron-col"><h4>谱名</h4><ul><li>条目</li></ul></div> ×3 </div>
+.chron-cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.chron-col {
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 8px;
+  padding: 0.75rem 1rem 1rem;
+  background: var(--light, #fafafa);
+
+  & > h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid var(--lightgray, #e6e6e6);
+    padding-bottom: 0.5rem;
+  }
+  & > ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+  }
+  & > ul > li {
+    margin: 0.35rem 0;
+    line-height: 1.7;
+  }
+}
+@media (max-width: 768px) {
+  .chron-cols { grid-template-columns: 1fr; }
+}
+
 // —— 引用 callout（> [!quote]）：学术引用感——正文更小、弱化色，标题小号大写（已去斜体）——
 .callout[data-callout="quote"] .callout-content {
   font-size: 0.85em;
@@ -116,14 +151,30 @@
   }
 }
 
-// —— 关系图谱移到正文底部居中（与 footer 相邻） ——
-.center > .graph {
-  max-width: 760px;
-  margin: 2.5rem auto 0;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--lightgray, #e6e6e6);
+// —— 关系图谱模块已移除（afterBody 置空，使页面更丝滑） ——
 
-  & > .graph-outer {
-    height: 320px;
-  }
+// —— 搜索模式切换（全部 / 仅标题 / 仅正文） ——
+.search-modes {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.25rem;
+}
+.search-modes .search-mode {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--lightgray, #e6e6e6);
+  border-radius: 6px;
+  background: var(--light, #fafafa);
+  color: var(--darkgray, #4e4e4e);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.search-modes .search-mode:hover {
+  border-color: var(--secondary, #284b63);
+}
+.search-modes .search-mode.active {
+  background: var(--highlight, rgba(143, 159, 169, 0.15));
+  border-color: var(--secondary, #284b63);
+  color: var(--secondary, #284b63);
+  font-weight: 600;
 }

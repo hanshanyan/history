@@ -39,6 +39,11 @@ export default ((userOpts?: Partial<SearchOptions>) => {
               aria-label={searchPlaceholder}
               placeholder={searchPlaceholder}
             />
+            <div class="search-modes">
+              <button class="search-mode active" data-mode="all">全部</button>
+              <button class="search-mode" data-mode="title">仅标题</button>
+              <button class="search-mode" data-mode="content">仅正文</button>
+            </div>
             <div class="search-layout" data-preview={opts.enablePreview}></div>
           </div>
         </div>

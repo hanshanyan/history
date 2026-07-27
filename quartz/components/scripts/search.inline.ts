@@ -16,6 +16,7 @@ interface Item {
 type SearchType = "basic" | "tags"
 let searchType: SearchType = "basic"
 let currentSearchTerm: string = ""
+let searchMode: "all" | "title" | "content" = "all"
 const encoder = (str: string): string[] => {
   const tokens: string[] = []
   let bufferStart = -1
@@ -201,6 +202,20 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
 
   const searchLayout = searchElement.querySelector(".search-layout") as HTMLElement
   if (!searchLayout) return
+
+  // 标题/正文 搜索模式切换（全部 / 仅标题 / 仅正文）
+  const searchModeButtons = searchElement.querySelectorAll(".search-mode") as NodeListOf<HTMLButtonElement>
+  searchModeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      searchMode = btn.dataset.mode as "all" | "title" | "content"
+      searchModeButtons.forEach((b) => b.classList.remove("active"))
+      btn.classList.add("active")
+      // 若已有查询词，立即用新模式重新搜索
+      if (currentSearchTerm) {
+        searchBar.dispatchEvent(new Event("input"))
+      }
+    })
+  })
 
   const idDataMap = Object.keys(data) as FullSlug[]
   const appendLayout = (el: HTMLElement) => {
@@ -471,10 +486,16 @@ async function setupSearch(searchElement: Element, currentSlug: FullSlug, data: 
         })
       }
     } else if (searchType === "basic") {
+      const idx =
+        searchMode === "title"
+          ? ["title"]
+          : searchMode === "content"
+            ? ["content"]
+            : ["title", "content"]
       searchResults = await index.searchAsync({
         query: currentSearchTerm,
         limit: numSearchResults,
-        index: ["title", "content"],
+        index: idx,
       })
     }
 

@@ -1,6 +1,7 @@
 ---
 title: 方顺安：我秘密受命为林彪开车
 aliases:
+tags:
   - 工作人员
 ---
 <p align="center">方顺安</p>
