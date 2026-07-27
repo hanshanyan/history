@@ -4,7 +4,7 @@ author: 陈士渠
 tags:
   - 井冈山
   - 星火燎原
-  - 文类/zlib
+  - 溯源/zlib
 publish: 1958-08-01
 aliases:
   - 陈士渠：七溪岭战斗
