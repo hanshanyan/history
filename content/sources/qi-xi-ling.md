@@ -1,9 +1,11 @@
 ---
 title: 陈士渠：七溪岭战斗
-aliases:
-  - 陈士渠：七溪岭战斗
+author: 陈士渠
 tags:
   - 井冈山
+publish: 1958-08-01
+aliases:
+  - 陈士渠：七溪岭战斗
 ---
 
 

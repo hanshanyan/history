@@ -1,9 +1,11 @@
 ---
 title: 刘显宜：敖山庙伏击
-aliases:
-  - 刘显宜：敖山庙伏击
+author: 刘显宜
 tags:
   - 井冈山
+publish: 1958-08-01
+aliases:
+  - 刘显宜：敖山庙伏击
 ---
 
 
