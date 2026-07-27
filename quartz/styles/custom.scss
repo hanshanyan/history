@@ -178,3 +178,38 @@
 .content-meta > span {
   display: none;
 }
+
+// —— 标签列表改为行内显示在标题/日期下方（禁用 note-properties 后由 tag-list 渲染）——
+.tags {
+  margin: 0.25rem 0 1rem;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tags > li {
+  margin: 0;
+}
+
+a.internal.tag-link {
+  display: inline-block;
+  border-radius: 6px;
+  background: var(--lightgray, #e6e6e6);
+  color: var(--dark, #2b2b2b);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+a.internal.tag-link::before {
+  content: "#";
+  margin-right: 0.1rem;
+  opacity: 0.7;
+}
+
+a.internal.tag-link:hover {
+  background: var(--gray, #b8b8b8);
+}
