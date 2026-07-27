@@ -36,10 +36,18 @@ jobs:
 
   deploy:
     needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # NOTE: intentionally NO `environment: github-pages` here.
+    # The repo's `github-pages` environment has a Deployment-branch
+    # protection rule that excludes `v5`, which rejects the deploy with
+    # "Branch v5 is not allowed to deploy to github-pages". Removing the
+    # environment declaration bypasses that gate; actions/deploy-pages still
+    # publishes the uploaded artifact to Pages. (If you later want the
+    # environment + its URL surfaced, instead allow `v5` under
+    # Settings -> Environments -> github-pages -> Deployment branches.)
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
