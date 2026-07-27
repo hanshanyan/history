@@ -346,21 +346,14 @@ var Footer_default = ((opts) => {
   const version = getQuartzVersion();
   const Footer = ({ displayClass, cfg }) => {
     const year = (/* @__PURE__ */ new Date()).getFullYear();
-    const links = opts?.links ?? [];
-    return /* @__PURE__ */ u2("footer", { class: `${displayClass ?? ""}`, children: [
-      /* @__PURE__ */ u2("p", { children: [
-        i18n(cfg?.locale ?? "en-US").components.footer.createdWith,
-        " ",
-        /* @__PURE__ */ u2("a", { href: "https://quartz.jzhao.xyz/", children: [
-          "Quartz",
-          version ? ` v${version}` : ""
-        ] }),
-        " \xA9",
-        " ",
-        year
-      ] }),
-      /* @__PURE__ */ u2("ul", { children: Object.entries(links).map(([text, link]) => /* @__PURE__ */ u2("li", { children: /* @__PURE__ */ u2("a", { href: link, children: text }) })) })
-    ] });
+        const links = opts?.links ?? {};
+    const linkEls = Object.entries(links).map(([text, link]) =>
+      u2("a", { href: link, children: [text, (text === "Quartz" && version) ? ` v${version}` : ""] })
+    );
+    const joined = [];
+    linkEls.forEach((el, i2) => { if (i2 > 0) joined.push(" & "); joined.push(el); });
+    const children = [i18n(cfg?.locale ?? "en-US").components.footer.createdWith, " ", ...joined, " © ", year];
+    return u2("footer", { class: `${displayClass ?? ""}`, children: [u2("p", { children })] });
   };
   Footer.css = footer_default;
   return Footer;

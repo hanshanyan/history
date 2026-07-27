@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: 寒山唁
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -196,6 +196,8 @@ plugins:
       priority: 10
   - source: "@quartz-community/content-meta"
     enabled: true
+    options:
+      showComma: false
     layout:
       position: beforeBody
       priority: 20
