@@ -291,6 +291,7 @@ a.internal.tag-link:hover {
 }
 
 // 脚注锚点跳转后位于屏幕中间，避免被顶栏或段间距遮挡
-a[id^="user-content-fn"] {
-  scroll-margin-top: 40vh;
+a[id^="user-content-fn"],
+li[id^="user-content-fn"] {
+  scroll-margin-top: 45vh;
 }
