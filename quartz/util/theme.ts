@@ -86,12 +86,17 @@ function formatFontSpecification(
 }
 
 export function googleFontHref(theme: Theme) {
-  const { header, body, code } = theme.typography
+  const { header, body, code, title } = theme.typography
   const headerFont = formatFontSpecification("header", header)
   const bodyFont = formatFontSpecification("body", body)
   const codeFont = formatFontSpecification("code", code)
+  const titleFont = title ? formatFontSpecification("title", title) : null
 
-  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}&display=swap`
+  // 把独立的 title 字体也并进页面字体 link，否则 --titleFont 引用了却没加载字体文件，
+  // PageTitle 会回退到系统字体（title 未设置或与 header 相同时不重复加载）
+  const titleParam = titleFont && titleFont !== headerFont ? `&family=${titleFont}` : ""
+
+  return `https://fonts.googleapis.com/css2?family=${headerFont}&family=${bodyFont}&family=${codeFont}${titleParam}&display=swap`
 }
 
 export function googleFontSubsetHref(theme: Theme, text: string) {

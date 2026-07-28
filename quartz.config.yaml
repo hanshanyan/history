@@ -17,6 +17,7 @@ configuration:
     cdnCaching: true
     typography:
       header: Schibsted Grotesk
+      title: "Zhi Mang Xing"
       body: Source Sans Pro
       code: IBM Plex Mono
     colors:

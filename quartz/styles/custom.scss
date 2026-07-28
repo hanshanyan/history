@@ -131,8 +131,14 @@
     overscroll-behavior: contain;
   }
   // 关键：禁止左栏子项被 flex 压缩——否则探索/目录会被压成一条缝
-  .page > #quartz-body > .left.sidebar > * {
+  // 但 .toc 必须允许收缩（见下方折叠修复），否则折叠态收不回一行
+  .page > #quartz-body > .left.sidebar > *:not(.toc) {
     flex-shrink: 0;
+  }
+  // 修复 ToC 折叠“虚影”：折叠态直接隐藏目录内容，
+  // 杜绝因容器未收缩而露出的半透明链接（opacity:0.35）残影
+  .page > #quartz-body > .left.sidebar .toc:has(button.toc-header.collapsed) .toc-content {
+    display: none;
   }
   // 关掉探索/目录/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见
   .page > #quartz-body > .left.sidebar div:has(> .overflow),
