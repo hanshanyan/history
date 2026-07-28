@@ -61,6 +61,7 @@ var sectionNav_inline = `(function(){
     wrap.appendChild(heading);
     var clone=content.cloneNode(true);
     clone.removeAttribute('id');
+    clone.classList.remove('collapsed');
     wrap.appendChild(clone);
     explorer.appendChild(wrap);
     wrap.addEventListener('click',function(e){
