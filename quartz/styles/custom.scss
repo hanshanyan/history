@@ -217,9 +217,12 @@ a.internal.tag-link:hover {
 // —— 移动端优化：左侧边栏只保留核心工具（站点标题/搜索/主题/探索器），目录/标签云/反向链接收起 ——
 @media all and ($mobile) {
   .page > #quartz-body > .left.sidebar {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    gap: 0.35rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
 
     // 隐藏占版面的辅助组件：目录、全站标签、反向链接
     & > .toc,
@@ -228,17 +231,38 @@ a.internal.tag-link:hover {
       display: none !important;
     }
 
-    // 站点标题在手机上缩小，避免把顶栏撑得太高
+    // 站点标题：缩小、可收缩、超出省略
     & > .page-title {
       font-size: 1rem !important;
+      order: 2;
+      flex: 0 1 auto;
+      max-width: 6rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
     }
 
-    // Explorer 在移动端不要太贴边，和官方 Quartz 一样留出左内边距
+    // 占位 spacer：把工具组推到右侧
+    & > .spacer {
+      order: 3;
+      flex: 1 1 auto !important;
+      min-width: 0;
+    }
+
+    // toolbar 组（搜索 / 主题 / 阅读模式）：靠右，允许收缩
+    & > .flex-component {
+      order: 4;
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+
+    // Explorer / 汉堡：放到最左侧
     & > .explorer {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-      width: 100%;
-      box-sizing: border-box;
+      order: 1;
+      width: auto;
+      padding: 0;
+      flex: 0 0 auto;
     }
 
     // Explorer 展开/折叠按钮左边距，避免 > 贴到屏幕边缘
@@ -253,6 +277,15 @@ a.internal.tag-link:hover {
     }
   }
 
+  // 搜索框在顶栏内限制最大宽度，防止把其他按钮挤出屏幕
+  .left.sidebar .search {
+    max-width: 7rem;
+    min-width: 2rem;
+  }
+  .left.sidebar .search > .search-button {
+    padding-right: 0.5rem;
+  }
+
   // 文章页眉里的标签列表在手机上更紧凑
   .page-header .tags {
     margin-bottom: 0.35rem;
@@ -263,10 +296,16 @@ a.internal.tag-link:hover {
     padding-top: 0.1rem;
   }
 
-  // 正文容器在手机上占满宽度，避免右侧大段空白（右侧留白收窄）
+  // 移除 quartz-body 在移动端的外层水平内边距，由 .center 自己控制正文边距
+  .page > #quartz-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // 正文容器在手机上占满宽度，左右留白对称
   .page > #quartz-body .center {
     padding-left: 0.6rem;
-    padding-right: 0.35rem;
+    padding-right: 0.6rem;
     max-width: 100%;
   }
 
