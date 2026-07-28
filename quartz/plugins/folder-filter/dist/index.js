@@ -22,7 +22,13 @@ function u2(e2, t2, n2, o2, i2, u3) {
 var f2 = 0;
 
 // styles
-var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem}
+var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}
+.folder-table th:nth-child(2){width:80px}
+.folder-table th:nth-child(3){width:96px}
+.folder-table th:nth-child(4){width:120px}
+.folder-table th:nth-child(5){width:200px}
+.folder-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
+.folder-table td:nth-child(1),.folder-table td:nth-child(2),.folder-table td:nth-child(4){word-break:break-word}
 .folder-table th,.folder-table td{padding:.5rem .6rem;text-align:left;border-bottom:1px solid var(--lightgray)}
 .folder-table th{font-weight:600;vertical-align:bottom;background:transparent}
 .folder-table th.sortable{cursor:pointer;user-select:none}
@@ -133,15 +139,29 @@ function resolveRelative(current, target) {
   if (root === ".") return simple;
   return root + "/" + simple;
 }
-function formatDate(value, locale) {
+function formatDate(value) {
   if (!value) return "";
-  var d = value instanceof Date ? value : new Date(value);
-  if (isNaN(d.getTime())) return String(value);
-  return d.toLocaleDateString(locale || "zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" });
+  var s = String(value).trim();
+  var m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (m) {
+    var mo = String(Number(m[2])).padStart(2, "0");
+    var da = String(Number(m[3])).padStart(2, "0");
+    return m[1] + "/" + mo + "/" + da;
+  }
+  var d = new Date(value);
+  if (isNaN(d.getTime())) return s;
+  var y = d.getFullYear();
+  var mm = String(d.getMonth() + 1).padStart(2, "0");
+  var dd = String(d.getDate()).padStart(2, "0");
+  return y + "/" + mm + "/" + dd;
 }
 function getTimestamp(value) {
   if (!value) return 0;
-  var d = value instanceof Date ? value : new Date(value);
+  var s = String(value).trim();
+  var m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  var d;
+  if (m) d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  else d = new Date(value);
   return isNaN(d.getTime()) ? 0 : d.getTime();
 }
 
@@ -179,7 +199,7 @@ var FolderFilter_default = ((opts) => {
       const source = Array.isArray(rawSource) ? rawSource.join("、") : (rawSource || "");
       const tags = (fm.tags ?? []).filter(Boolean);
       const dateVal = fm.publish;
-      const dateStr = formatDate(dateVal, locale);
+      const dateStr = formatDate(dateVal);
       const ts = getTimestamp(dateVal);
       return {
         slug: c.slug,

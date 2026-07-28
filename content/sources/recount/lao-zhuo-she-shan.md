@@ -3,7 +3,6 @@ title: 老卓：我陪林彪上佘山
 author: 相关人士
 tags:
   - 相关人士
-  - link
   - 建国后
 publish: 2026-04-25
 来源:

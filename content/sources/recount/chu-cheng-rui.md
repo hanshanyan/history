@@ -3,7 +3,6 @@ title: 楚成瑞：我给林彪治“怪病”
 author: 楚成瑞
 tags:
   - 工作人员
-  - link
   - 解放战争
 publish: 2006-11-22
 来源:

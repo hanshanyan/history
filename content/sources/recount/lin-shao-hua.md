@@ -3,7 +3,6 @@ title: 记者：记林彪亲侄女林少华
 author: 记者
 tags:
   - 亲人
-  - link
   - 建国后
 publish: 2011-01-01
 来源:

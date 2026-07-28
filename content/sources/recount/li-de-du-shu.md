@@ -3,7 +3,6 @@ title: 李德：林彪读书见闻
 author: 李德
 tags:
   - 工作人员
-  - link
   - 建国后
 publish: 2007-07-20
 来源:
