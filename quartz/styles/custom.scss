@@ -217,9 +217,9 @@ a.internal.tag-link:hover {
 // —— 移动端优化：左侧边栏只保留核心工具（站点标题/搜索/主题/探索器），目录/标签云/反向链接收起 ——
 @media all and ($mobile) {
   .page > #quartz-body > .left.sidebar {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    gap: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    gap: 0.35rem;
 
     // 隐藏占版面的辅助组件：目录、全站标签、反向链接
     & > .toc,
@@ -230,17 +230,38 @@ a.internal.tag-link:hover {
 
     // 站点标题在手机上缩小，避免把顶栏撑得太高
     & > .page-title {
-      font-size: 1.1rem !important;
+      font-size: 1rem !important;
     }
   }
 
   // 文章页眉里的标签列表在手机上更紧凑
   .page-header .tags {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
   // 正文标题与顶栏之间不要留太多空白
   .page-header {
-    padding-top: 0.25rem;
+    padding-top: 0.1rem;
+  }
+
+  // 正文容器在手机上占满宽度，避免右侧大段空白
+  .page > #quartz-body .center {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  // 正文段落两端对齐，减少右侧参差不齐
+  .page article p {
+    text-align: justify;
+  }
+
+  // 图片、表格等富媒体不撑破容器
+  .page article img,
+  .page article table,
+  .page article pre,
+  .page article blockquote,
+  .page article .callout {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }

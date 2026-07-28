@@ -28,7 +28,8 @@ var sectionNav_css = `.section-nav{position:fixed;top:0;left:0;right:0;z-index:1
 .section-nav-link.active{color:#1B5E20;background:#A5D6A7}
 body{padding-top:48px !important}
 header,.page-header{margin-top:1.5rem !important}
-.sidebar{top:48px !important;padding-top:calc(48px + 1.5rem) !important}`;
+.sidebar{top:48px !important;padding-top:calc(48px + 1.5rem) !important}
+@media (max-width:800px){header,.page-header{margin-top:.25rem !important}.sidebar{padding-top:calc(48px + .25rem) !important}.section-nav{height:44px;font-size:.9rem;padding:0 .75rem}.section-nav-link{padding:.3rem .7rem}}`;
 
 // client script: keep the active item in sync on SPA navigation
 var sectionNav_inline = `(function(){
