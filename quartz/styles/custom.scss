@@ -222,13 +222,30 @@ a.internal.tag-link:hover {
 
 // —— 移动端优化：左侧边栏只保留核心工具（站点标题/搜索/主题/探索器），目录/标签云/反向链接收起 ——
 @media all and ($mobile) {
+  // 强制移除 body/容器水平内边距，避免顶栏左右留白
+  .page > #quartz-body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   .page > #quartz-body > .left.sidebar {
-    padding: 0;
+    padding: 0 0.5rem !important;
+    margin: 0 !important;
     width: 100%;
     gap: 0.5rem;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+    box-sizing: border-box;
+    // 手机端顶栏固定常驻：紧贴自定义导航栏(section-nav)下方，滚动时不消失
+    position: fixed !important;
+    top: 44px !important;
+    left: 0;
+    right: 0;
+    height: 48px;
+    z-index: 999;
+    background: var(--light);
+    border-bottom: 1px solid var(--lightgray);
 
     // 隐藏占版面的辅助组件：目录、全站标签、反向链接
     & > .toc,
@@ -263,11 +280,12 @@ a.internal.tag-link:hover {
       min-width: 0;
     }
 
-    // Explorer / 汉堡：放到最左侧
+    // Explorer / 汉堡：放到最左侧，紧贴左边缘
     & > .explorer {
       order: 1;
       width: auto;
       padding: 0;
+      margin: 0;
       flex: 0 0 auto;
     }
 
@@ -300,12 +318,6 @@ a.internal.tag-link:hover {
   // 正文标题与顶栏之间不要留太多空白
   .page-header {
     padding-top: 0.1rem;
-  }
-
-  // 移除 quartz-body 在移动端的外层水平内边距，由 .center 自己控制正文边距
-  .page > #quartz-body {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   // 正文容器在手机上占满宽度：左边略宽避免贴太紧，右边收窄减少空白
@@ -360,10 +372,13 @@ a.internal.tag-link:hover {
     width: 34px;
     height: 34px;
     padding: 5px;
+    padding-left: 0;
+    margin: 0;
     box-sizing: border-box;
     background: var(--light);
     border: 1px solid var(--lightgray);
-    border-radius: 6px;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
     color: var(--dark);
   }
   .explorer .mobile-explorer .lucide-menu {
@@ -379,11 +394,30 @@ a.internal.tag-link:hover {
     position: fixed !important;
     top: 0;
     left: 0;
+    display: block !important;
+    width: min(86vw, 340px);
     height: 100dvh;
     max-height: 100dvh;
     overflow-y: auto !important;
     overscroll-behavior: contain;
-    padding: 4rem 1rem 3rem 1rem;
+    // 顶部留白避开两条固定栏（section-nav 44px + 顶栏 48px ≈ 92px）
+    padding: 5.5rem 1rem 3rem 1rem;
+    // 低于顶栏(999)/导航栏(1000)，保证汉堡按钮始终可点关闭抽屉
+    z-index: 998;
+    background: var(--light);
+    border-right: 1px solid var(--lightgray);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  }
+
+  // 抽屉里的 mobile-toc（由 section-nav 脚本把 ToC 克隆进来）要恢复显示并取消 max-height 限制。
+  // 关键：Quartz 默认 .toc-content{display:none}（依赖 <details open> 才显示），
+  // 克隆到抽屉里没有 <details> 包裹，会被隐藏，所以必须强制 display:block。
+  .explorer .explorer-content .mobile-toc,
+  .explorer .explorer-content .mobile-toc .toc-content,
+  .explorer .explorer-content .mobile-toc .toc-content.overflow {
+    display: block !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }
 
