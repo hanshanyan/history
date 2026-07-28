@@ -255,7 +255,16 @@ plugins:
         GitHub: https://github.com/lin-yu-rong/lin-yu-rong.github.io
         Quartz: https://quartz.jzhao.xyz
   - source: "@quartz-community/recent-notes"
-    enabled: false
+    enabled: true
+    options:
+      title: "最近笔记"
+      limit: 6
+      showTags: false
+      hideTagPages: true
+      hideFolderPages: true
+    layout:
+      position: afterBody
+      priority: 5
   - source: "@quartz-community/spacer"
     enabled: true
     options: {}
