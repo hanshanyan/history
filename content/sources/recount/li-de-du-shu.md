@@ -11,8 +11,8 @@ aliases:
   - 李德：林彪读书见闻
 ---
 
-[文学城：关于林彪读书的一些见闻](https://www.wenxuecity.com/blog/200812/39991/20122.html)
-[万维：林彪读书废寝忘食最爱看啥书](https://news.creaders.net/china/2007/07/20/739555.html)
+[文学城：关于林彪读书的一些见闻](https://www.wenxuecity.com/blog/200812/39991/20122.html)、[万维：林彪读书废寝忘食最爱看啥书](https://news.creaders.net/china/2007/07/20/739555.html)
+
 
 历史上常常有许多的误会，以致令人啼笑皆非。前些年流传的林彪“不读书、不看报”就是其中之一。事实上林彪是一个酷爱读书的人。
 

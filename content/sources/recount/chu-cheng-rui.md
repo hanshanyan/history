@@ -11,8 +11,7 @@ aliases:
   - 楚成瑞：我给林彪治“怪病”
 ---
 
-[文学城：楚成瑞 谈谈林彪的病情](https://blog.wenxuecity.com/myblog/62877/201312/13972.html)
-[凤凰网：南方周末 我给林彪治怪病](https://news.ifeng.com/history/200611/1122_25_36747.shtml)
+[文学城：楚成瑞 谈谈林彪的病情](https://blog.wenxuecity.com/myblog/62877/201312/13972.html)、[凤凰网：南方周末 我给林彪治怪病](https://news.ifeng.com/history/200611/1122_25_36747.shtml)
 
 在一个充满阳光的日子里，我们来到楚成瑞老人的家。楚老今年71岁，已离休多年，但思维仍然很清晰，记忆力相当好，说起话来底气很足，健谈而又风趣。
 
