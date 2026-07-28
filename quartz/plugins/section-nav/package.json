@@ -1,0 +1,32 @@
+{
+  "name": "section-nav",
+  "version": "1.0.0",
+  "type": "module",
+  "quartz": {
+    "name": "section-nav",
+    "displayName": "SectionNav",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 100,
+    "defaultEnabled": true,
+    "defaultOptions": {},
+    "components": {
+      "SectionNav": {
+        "displayName": "SectionNav",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 100
+      }
+    }
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./components": "./dist/index.js"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0",
+    "@quartz-community/utils": "^0.1.0",
+    "@quartz-community/types": "^0.2.1"
+  }
+}

@@ -3,8 +3,8 @@ title: 刘显宜：敖山庙伏击
 author: 刘显宜
 tags:
   - 井冈山
-  - 🏛zlib
   - 战史回忆
+  - zlib
 publish: 1958-08-01
 来源:
   - 《星火燎原》

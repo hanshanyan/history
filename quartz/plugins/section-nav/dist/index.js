@@ -1,0 +1,95 @@
+// src/components/FolderFilter.tsx (precompiled)
+
+// preact jsx-runtime shim (mirrors footer/dist)
+var l;
+l = { __e: function (n2, l2, u3, t2) {
+  for (var i2, r2, o2; l2 = l2.__; ) if ((i2 = l2.__c) && !i2.__) try {
+    if ((r2 = i2.constructor) && null != r2.getDerivedStateFromError && (i2.setState(r2.getDerivedStateFromError(n2)), o2 = i2.__d), null != i2.componentDidCatch && (i2.componentDidCatch(n2, t2 || {}), o2 = i2.__d), o2) return i2.__E = i2;
+  } catch (l3) {
+    n2 = l3;
+  }
+  throw n2;
+} }, "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, Math.random().toString(8);
+
+function u2(e2, t2, n2, o2, i2, u3) {
+  t2 || (t2 = {});
+  var a2, c2, p2 = t2;
+  if ("ref" in p2) for (c2 in p2 = {}, t2) "ref" == c2 ? a2 = t2[c2] : p2[c2] = t2[c2];
+  var l2 = { type: e2, props: p2, key: n2, ref: a2, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f2, __i: -1, __u: 0, __source: i2, __self: u3 };
+  if ("function" == typeof e2 && (a2 = e2.defaultProps)) for (c2 in a2) void 0 === p2[c2] && (p2[c2] = a2[c2]);
+  return l.vnode && l.vnode(l2), l2;
+}
+var f2 = 0;
+
+// styles (fixed top bar + layout offsets so nothing is hidden behind it)
+var sectionNav_css = `.section-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:48px;display:flex;align-items:center;gap:.4rem;padding:0 1rem;background:var(--light);border-bottom:1px solid var(--lightgray);font-size:.95rem}
+.section-nav-link{text-decoration:none;color:var(--darkgray);padding:.35rem .9rem;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.section-nav-link:hover{background:var(--lightgray)}
+.section-nav-link.active{color:#fff;background:#993C1D}
+body{padding-top:48px !important}
+header,.page-header{margin-top:1.5rem !important}
+.sidebar{top:48px !important;padding-top:calc(48px + 1.5rem) !important}`;
+
+// client script: keep the active item in sync on SPA navigation
+var sectionNav_inline = `(function(){
+  function update(){
+    var nav = document.querySelector('.section-nav');
+    if(!nav) return;
+    var slug = (document.body.getAttribute('data-slug')||'').replace(/\\/index$/,'');
+    var links = nav.querySelectorAll('a.section-nav-link');
+    for (var i=0;i<links.length;i++){
+      var t = links[i].getAttribute('data-target')||'';
+      var active = (slug===t || slug.indexOf(t+'/')===0);
+      if(active) links[i].classList.add('active'); else links[i].classList.remove('active');
+    }
+  }
+  if(document.readyState!=='loading') update(); else document.addEventListener('DOMContentLoaded', update);
+  document.addEventListener('nav', update);
+})();`;
+
+var ITEMS = [
+  { key: "timeline", label: "年谱", target: "timeline" },
+  { key: "sources", label: "史料", target: "sources" },
+  { key: "analysis", label: "史论", target: "analysis" },
+];
+
+function pathToRoot(slug) {
+  var depth = slug.split("/").filter(Boolean).length - 1;
+  if (depth <= 0) return ".";
+  return new Array(depth).fill("..").join("/");
+}
+function simplifySlug(target) {
+  return target.replace(/^\/+/, "").replace(/\/index$/, "");
+}
+function resolveRelative(current, target) {
+  var root = pathToRoot(current);
+  var simple = simplifySlug(target);
+  if (root === ".") return simple;
+  return root + "/" + simple;
+}
+
+var SectionNav_default = ((opts) => {
+  const SectionNav = ({ fileData }) => {
+    const slug = (fileData?.slug ?? "").replace(/\/index$/, "");
+    let activeKey = "";
+    for (const it of ITEMS) {
+      if (slug === it.target || slug.indexOf(it.target + "/") === 0) { activeKey = it.key; break; }
+    }
+    const cur = fileData?.slug ?? "";
+    const links = ITEMS.map((it) =>
+      u2("a", {
+        class: "section-nav-link" + (it.key === activeKey ? " active" : ""),
+        href: resolveRelative(cur, it.target),
+        "data-target": it.target,
+        children: [it.label],
+      })
+    );
+    return u2("nav", { class: "section-nav", children: links });
+  };
+  SectionNav.css = sectionNav_css;
+  SectionNav.afterDOMLoaded = sectionNav_inline;
+  return SectionNav;
+});
+
+export { SectionNav_default as SectionNav };
+//# sourceMappingURL=index.js.map
