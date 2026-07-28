@@ -250,9 +250,10 @@ a.internal.tag-link:hover {
     padding-right: 1rem;
   }
 
-  // 正文段落两端对齐，减少右侧参差不齐
+  // 正文段落两端对齐，但段落最后一行自然左起（避免末行字间距被拉大）
   .page article p {
     text-align: justify;
+    text-align-last: left;
   }
 
   // 图片、表格等富媒体不撑破容器
