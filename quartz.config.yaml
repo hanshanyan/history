@@ -201,7 +201,7 @@ plugins:
     layout:
       position: beforeBody
       priority: 20
-  - source: "@quartz-community/tag-list"
+  - source: "./quartz/plugins/tag-list"
     enabled: true
     layout:
       position: beforeBody

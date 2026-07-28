@@ -232,6 +232,25 @@ a.internal.tag-link:hover {
     & > .page-title {
       font-size: 1rem !important;
     }
+
+    // Explorer 在移动端不要太贴边，和官方 Quartz 一样留出左内边距
+    & > .explorer {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    // Explorer 展开/折叠按钮左边距，避免 > 贴到屏幕边缘
+    & .folder-container div > button {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    // Explorer 文件夹标题也同步左边距，文字和按钮对齐
+    & .folder-container div > a {
+      padding-left: 0.5rem;
+    }
   }
 
   // 文章页眉里的标签列表在手机上更紧凑
@@ -250,12 +269,9 @@ a.internal.tag-link:hover {
     padding-right: 0.5rem;
   }
 
-  // 正文段落两端对齐，但段落最后一行自然左起（避免末行字间距被拉大）
-  // 加 text-justify: inter-ideograph 让中文字符均匀分配空白，减少 iOS Safari 上字间距忽大忽小
+  // 移动端中文 justify 字间距忽大忽小，改为纯左对齐保证字间距一致
   .page article p {
-    text-align: justify;
-    text-align-last: left;
-    text-justify: inter-ideograph;
+    text-align: left;
   }
 
   // 图片、表格等富媒体不撑破容器
