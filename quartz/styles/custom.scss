@@ -223,8 +223,8 @@ a.internal.tag-link:hover {
 // —— 移动端优化：左侧边栏只保留核心工具（站点标题/搜索/主题/探索器），目录/标签云/反向链接收起 ——
 @media all and ($mobile) {
   .page > #quartz-body > .left.sidebar {
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    padding: 0;
+    width: 100%;
     gap: 0.5rem;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -308,16 +308,21 @@ a.internal.tag-link:hover {
     padding-right: 0;
   }
 
-  // 正文容器在手机上占满宽度，左右留白对称
+  // 正文容器在手机上占满宽度：左边略宽避免贴太紧，右边收窄减少空白
   .page > #quartz-body .center {
-    padding-left: 0.6rem;
+    padding-left: 1rem;
     padding-right: 0.6rem;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   // 移动端中文 justify 字间距忽大忽小，改为纯左对齐保证字间距一致
-  .page article p {
+  .page article p,
+  .page article li {
     text-align: left;
+    hyphens: none;
+    word-spacing: normal;
+    letter-spacing: normal;
   }
 
   // 图片、表格等富媒体不撑破容器
