@@ -263,10 +263,11 @@ a.internal.tag-link:hover {
     padding-top: 0.1rem;
   }
 
-  // 正文容器在手机上占满宽度，避免右侧大段空白
+  // 正文容器在手机上占满宽度，避免右侧大段空白（右侧留白收窄）
   .page > #quartz-body .center {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.6rem;
+    padding-right: 0.35rem;
+    max-width: 100%;
   }
 
   // 移动端中文 justify 字间距忽大忽小，改为纯左对齐保证字间距一致
@@ -288,10 +289,71 @@ a.internal.tag-link:hover {
   .explorer .mobile-explorer.hide-until-loaded {
     display: flex !important;
   }
+
+  // —— 修复移动端汉堡图标不显示 ——
+  // 根因：主题未定义 --darkgray，导致 SVG 描边失效（图标透明）；
+  // 且 .explorer 折叠态 34px 盒子 + overflow:hidden 会裁切按钮。
+  // 此处用已定义的 --dark 描边、box-sizing 防止裁切，并允许溢出。
+  .explorer {
+    overflow: visible !important;
+  }
+  .explorer,
+  .explorer.collapsed,
+  .explorer:not(.collapsed) {
+    min-height: 34px;
+    flex: 0 0 auto;
+  }
+  .explorer .mobile-explorer {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    width: 34px;
+    height: 34px;
+    padding: 5px;
+    box-sizing: border-box;
+    background: var(--light);
+    border: 1px solid var(--lightgray);
+    border-radius: 6px;
+    color: var(--dark);
+  }
+  .explorer .mobile-explorer .lucide-menu {
+    stroke: var(--dark) !important;
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+
+  // —— 修复移动端抽屉（Explorer / ToC）无法滚动到底 ——
+  // 改为固定定位（相对视口）并开启纵向滚动，长目录可滑到末尾
+  .explorer .explorer-content {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    padding: 4rem 1rem 3rem 1rem;
+  }
 }
 
-// 脚注锚点跳转后位于屏幕中间，避免被顶栏或段间距遮挡
+// 脚注锚点跳转后位于屏幕中间附近，避免被顶栏或段间距遮挡（电脑/手机通用）
 a[id^="user-content-fn"],
 li[id^="user-content-fn"] {
-  scroll-margin-top: 45vh;
+  scroll-margin-top: 35vh;
 }
+
+// —— 目录(ToC)各级标题字号从大到小：桌面端 + 移动端统一 ——
+// 桌面端用 .toc-content，手机端汉堡抽屉里克隆出的目录用 .mobile-toc，两边字号层级一致
+ul.toc-content .depth-0 > a,
+.mobile-toc li.depth-0 > a { font-size: 1.05rem; font-weight: 600; }
+ul.toc-content .depth-1 > a,
+.mobile-toc li.depth-1 > a { font-size: 0.98rem; }
+ul.toc-content .depth-2 > a,
+.mobile-toc li.depth-2 > a { font-size: 0.92rem; }
+ul.toc-content .depth-3 > a,
+.mobile-toc li.depth-3 > a { font-size: 0.87rem; }
+ul.toc-content .depth-4 > a,
+.mobile-toc li.depth-4 > a { font-size: 0.83rem; }
+ul.toc-content .depth-5 > a,
+.mobile-toc li.depth-5 > a { font-size: 0.80rem; }
