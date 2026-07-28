@@ -246,14 +246,16 @@ a.internal.tag-link:hover {
 
   // 正文容器在手机上占满宽度，避免右侧大段空白
   .page > #quartz-body .center {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   // 正文段落两端对齐，但段落最后一行自然左起（避免末行字间距被拉大）
+  // 加 text-justify: inter-ideograph 让中文字符均匀分配空白，减少 iOS Safari 上字间距忽大忽小
   .page article p {
     text-align: justify;
     text-align-last: left;
+    text-justify: inter-ideograph;
   }
 
   // 图片、表格等富媒体不撑破容器
