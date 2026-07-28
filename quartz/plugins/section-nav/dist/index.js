@@ -22,10 +22,10 @@ function u2(e2, t2, n2, o2, i2, u3) {
 var f2 = 0;
 
 // styles (fixed top bar + layout offsets so nothing is hidden behind it)
-var sectionNav_css = `.section-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:48px;display:flex;align-items:center;gap:.4rem;padding:0 1rem;background:var(--light);border-bottom:1px solid var(--lightgray);font-size:.95rem}
+var sectionNav_css = `.section-nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:48px;display:flex;align-items:center;gap:.4rem;padding:0 1rem;background:var(--light);border-bottom:1px solid #C8E6C9;font-size:.95rem}
 .section-nav-link{text-decoration:none;color:var(--darkgray);padding:.35rem .9rem;border-radius:999px;border:1px solid transparent;white-space:nowrap}
-.section-nav-link:hover{background:var(--lightgray)}
-.section-nav-link.active{color:#fff;background:#993C1D}
+.section-nav-link:hover{background:#C8E6C9}
+.section-nav-link.active{color:#1B5E20;background:#A5D6A7}
 body{padding-top:48px !important}
 header,.page-header{margin-top:1.5rem !important}
 .sidebar{top:48px !important;padding-top:calc(48px + 1.5rem) !important}`;

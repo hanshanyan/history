@@ -151,12 +151,20 @@ var FolderFilter_default = ((opts) => {
     if (current.endsWith("/index")) current = current.slice(0, -"/index".length);
     if (current === "" || current === "index") return null;
     const depth = current.split("/").filter(Boolean).length;
+    const allSlugs = new Set((allFiles ?? []).map((f) => f.slug ?? ""));
+    const isFolder = (slug) => {
+      for (const other of allSlugs) {
+        if (other !== slug && other.startsWith(slug + "/")) return true;
+      }
+      return false;
+    };
     const children = (allFiles ?? []).filter((f) => {
       const s = (f.slug ?? "");
       if (!s) return false;
       if (!s.startsWith(current + "/")) return false;
-      if (s === current + "/index") return false;
-      return s.split("/").filter(Boolean).length === depth + 1;
+      if (s.endsWith("/index")) return false;       // skip folder index pages
+      if (isFolder(s)) return false;                 // skip folder pages, keep only leaf md
+      return true;                                   // include all descendant levels (penetrate subfolders)
     });
     if (children.length === 0) return null;
 
