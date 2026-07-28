@@ -160,7 +160,7 @@ plugins:
   - source: "./quartz/plugins/explorer-fork"
     enabled: true
     options:
-      folderDefaultState: "open"
+      folderDefaultState: "collapsed"
       folderClickBehavior: "link"
       useSavedState: false
     layout:
