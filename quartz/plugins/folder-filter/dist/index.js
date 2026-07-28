@@ -26,7 +26,8 @@ var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin
 .folder-table th:nth-child(2){width:75px}
 .folder-table th:nth-child(3){width:90px}
 .folder-table th:nth-child(4){width:110px}
-.folder-table th:nth-child(5){width:225px}
+.folder-table th:nth-child(5){width:250px}
+@media (max-width:800px){.folder-filter{overflow-x:auto}}
 .folder-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
 .folder-table td:nth-child(1),.folder-table td:nth-child(2),.folder-table td:nth-child(4){word-break:break-word}
 .folder-table th,.folder-table td{padding:.5rem .6rem;text-align:left;border-bottom:1px solid var(--lightgray)}
