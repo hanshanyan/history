@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: hanshanyan.github.io/history
+  baseUrl: lin-yu-rong.github.io
   ignorePatterns:
     - private
     - templates
@@ -148,7 +148,7 @@ plugins:
   - source: "@quartz-community/og-image"
     enabled: true
   - source: "@quartz-community/cname"
-    enabled: true
+    enabled: false
   - source: "@quartz-community/canvas-page"
     enabled: true
   - source: "@quartz-community/content-page"
@@ -251,7 +251,7 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/hanshanyan/history
+        GitHub: https://github.com/lin-yu-rong/lin-yu-rong.github.io
         Quartz: https://quartz.jzhao.xyz
   - source: "@quartz-community/recent-notes"
     enabled: false
