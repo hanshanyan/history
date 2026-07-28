@@ -8,7 +8,7 @@ publish: 2000-11-23
 来源:
 - 南方周末
 aliases:
-- 方顺安：我秘密受命为林彪开车
+- 迟泽厚：关光烈谈林彪
 ---
 
 [论坛转载](https://difangwenge.org/forum.php?mod=viewthread&tid=10043)
