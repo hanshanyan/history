@@ -283,4 +283,14 @@ a.internal.tag-link:hover {
     max-width: 100%;
     box-sizing: border-box;
   }
+
+  // 汉堡图标在脚本加载前可能仍被 hide-until-loaded 隐藏，强制显示
+  .explorer .mobile-explorer.hide-until-loaded {
+    display: flex !important;
+  }
+}
+
+// 脚注锚点跳转后位于屏幕中间，避免被顶栏或段间距遮挡
+a[id^="user-content-fn"] {
+  scroll-margin-top: 40vh;
 }

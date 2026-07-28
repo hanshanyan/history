@@ -165,6 +165,16 @@ function getTimestamp(value) {
   else d = new Date(value);
   return isNaN(d.getTime()) ? 0 : d.getTime();
 }
+function siteBasePath(cfg) {
+  var raw = cfg?.baseUrl ?? "";
+  if (!raw) return "";
+  try {
+    var url = new URL("https://" + raw);
+    return url.pathname.replace(/\/$/, "") || "";
+  } catch (e) {
+    return "";
+  }
+}
 
 var FolderFilter_default = ((opts) => {
   const FolderFilter = ({ displayClass, cfg, fileData, allFiles }) => {
@@ -190,6 +200,7 @@ var FolderFilter_default = ((opts) => {
     if (children.length === 0) return null;
 
     const locale = cfg?.locale ?? "zh-CN";
+    const basePath = siteBasePath(cfg);
     const fileSlug = fileData?.slug ?? "";
 
     const rows = children.map((c) => {
@@ -226,7 +237,7 @@ var FolderFilter_default = ((opts) => {
     });
 
     const tagLink = (tag) => u2("span", { class: "tag-pill", children: [
-      u2("a", { href: resolveRelative(fileSlug, "tags/" + tag), class: "internal tag-link", children: [tag] })
+      u2("a", { href: basePath + "/tags/" + tag, class: "internal tag-link", children: [tag] })
     ] });
 
     const table = u2("table", {
@@ -248,7 +259,7 @@ var FolderFilter_default = ((opts) => {
           "data-source": r.source,
           "data-tags": r.tags.join(" "),
           children: [
-            u2("td", { children: [u2("a", { href: resolveRelative(fileSlug, r.slug), class: "internal", children: [r.title] })] }),
+            u2("td", { children: [u2("a", { href: basePath + "/" + r.slug, class: "internal", children: [r.title] })] }),
             u2("td", { children: [r.author] }),
             u2("td", { children: [r.dateStr] }),
             u2("td", { children: [r.source] }),

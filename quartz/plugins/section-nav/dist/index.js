@@ -29,7 +29,7 @@ var sectionNav_css = `.section-nav{position:fixed;top:0;left:0;right:0;z-index:1
 body{padding-top:48px !important}
 header,.page-header{margin-top:1.5rem !important}
 .sidebar{top:48px !important;padding-top:calc(48px + 1.5rem) !important}
-@media (max-width:800px){header,.page-header{margin-top:.25rem !important}.sidebar{padding-top:calc(48px + .25rem) !important}.section-nav{height:44px;font-size:.9rem;padding:0 .75rem}.section-nav-link{padding:.3rem .7rem}}`;
+@media (max-width:800px){header,.page-header{margin-top:.25rem !important}.sidebar{padding-top:calc(48px + .25rem) !important}.section-nav{height:44px;font-size:.9rem;padding:0 .75rem}.section-nav-link{padding:.3rem .7rem}.explorer .mobile-explorer.hide-until-loaded{display:flex !important}.mobile-toc{margin-top:1rem;padding:0 .75rem}.mobile-toc h3{font-size:1rem;margin:.5rem 0;color:var(--darkgray)}.mobile-toc ul{list-style:none;padding:0;margin:0}.mobile-toc li{margin:.35rem 0}.mobile-toc a{color:var(--darkgray);text-decoration:none}.mobile-toc a:hover{color:var(--secondary)}}`;
 
 // client script: keep the active item in sync on SPA navigation
 var sectionNav_inline = `(function(){
@@ -46,6 +46,32 @@ var sectionNav_inline = `(function(){
   }
   if(document.readyState!=='loading') update(); else document.addEventListener('DOMContentLoaded', update);
   document.addEventListener('nav', update);
+  function setupMobileToc(){
+    if(window.innerWidth>800) return;
+    var toc=document.querySelector('.left.sidebar > .toc');
+    var explorer=document.querySelector('.explorer-content');
+    if(!toc||!explorer) return;
+    if(explorer.querySelector('.mobile-toc')) return;
+    var content=toc.querySelector('.toc-content');
+    if(!content) return;
+    var wrap=document.createElement('div');
+    wrap.className='mobile-toc';
+    var heading=document.createElement('h3');
+    heading.textContent='目录';
+    wrap.appendChild(heading);
+    var clone=content.cloneNode(true);
+    clone.removeAttribute('id');
+    wrap.appendChild(clone);
+    explorer.appendChild(wrap);
+    wrap.addEventListener('click',function(e){
+      var a=e.target.closest('a');
+      if(!a) return;
+      var exp=document.querySelector('.explorer');
+      if(exp){ exp.classList.add('collapsed'); exp.setAttribute('aria-expanded','false'); document.documentElement.classList.remove('mobile-no-scroll'); }
+    });
+  }
+  if(document.readyState!=='loading') setTimeout(setupMobileToc,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(setupMobileToc,0); });
+  document.addEventListener('nav',function(){ setTimeout(setupMobileToc,0); });
 })();`;
 
 var ITEMS = [
@@ -68,19 +94,30 @@ function resolveRelative(current, target) {
   if (root === ".") return simple;
   return root + "/" + simple;
 }
+function siteBasePath(cfg) {
+  var raw = cfg?.baseUrl ?? "";
+  if (!raw) return "";
+  try {
+    var url = new URL("https://" + raw);
+    return url.pathname.replace(/\/$/, "") || "";
+  } catch (e) {
+    return "";
+  }
+}
 
 var SectionNav_default = ((opts) => {
-  const SectionNav = ({ fileData }) => {
+  const SectionNav = ({ fileData, cfg }) => {
     const slug = (fileData?.slug ?? "").replace(/\/index$/, "");
     let activeKey = "";
     for (const it of ITEMS) {
       if (slug === it.target || slug.indexOf(it.target + "/") === 0) { activeKey = it.key; break; }
     }
     const cur = fileData?.slug ?? "";
+    const basePath = siteBasePath(cfg);
     const links = ITEMS.map((it) =>
       u2("a", {
         class: "section-nav-link" + (it.key === activeKey ? " active" : ""),
-        href: resolveRelative(cur, it.target),
+        href: basePath + "/" + it.target,
         "data-target": it.target,
         children: [it.label],
       })
