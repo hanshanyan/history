@@ -229,7 +229,7 @@ a.internal.tag-link:hover {
   }
 
   .page > #quartz-body > .left.sidebar {
-    padding: 0 0.5rem !important;
+    padding: 0 !important;
     margin: 0 !important;
     width: 100%;
     gap: 0.35rem;
@@ -275,25 +275,24 @@ a.internal.tag-link:hover {
       margin: 0;
     }
 
-    // spacer：不再把工具组推到右侧，让顶栏元素整体左起
-    & > .spacer {
+    // spacer：占据标题与工具组之间的剩余空间，把搜索/主题/阅读模式推到右侧
+    // 注意 spacer 被 mobile-only wrapper 包裹，直接让 wrapper 成为 flex item
+    & > .mobile-only {
       order: 3;
-      flex: 0 0 0 !important;
+      display: block !important;
+      flex: 1 1 auto !important;
       min-width: 0;
-      display: none;
+
+      & > .spacer {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     }
 
-    // 搜索框：紧跟标题
-    & > .search {
-      order: 4;
-      flex: 0 0 auto;
-      min-width: 2rem;
-      max-width: 5rem;
-    }
-
-    // toolbar 组（主题 / 阅读模式）：靠左排列
+    // toolbar 组（搜索 / 主题 / 阅读模式）：在 spacer 右侧靠右排列
     & > .flex-component {
-      order: 5;
+      order: 4;
       flex: 0 0 auto;
       min-width: 0;
     }
