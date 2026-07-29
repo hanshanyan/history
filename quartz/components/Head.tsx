@@ -43,6 +43,23 @@ export default (() => {
       <head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        {/* 禁止浏览器恢复滚动位置；无 hash 时强制置顶，避免进入 md 页自动下滑 */}
+        <script
+          type="application/javascript"
+          data-persist="true"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){
+                if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                function toTop(){ if (!location.hash) window.scrollTo(0,0); }
+                toTop();
+                if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', toTop);
+                window.addEventListener('pageshow', toTop);
+                document.addEventListener('nav', function(){ setTimeout(toTop,0); setTimeout(toTop,50); });
+              })();
+            `,
+          }}
+        />
         {coreStylesheet && <link rel="preload" href={coreStylesheet} as="style" />}
         {coreScript && coreScript.contentType === "external" && (
           <link rel="preload" href={coreScript.src} as="script" />
