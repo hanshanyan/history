@@ -205,6 +205,32 @@ var FolderFilter_default = ((opts) => {
     const basePath = siteBasePath(cfg);
     const fileSlug = fileData?.slug ?? "";
 
+    // Build author -> people page slug map (match by title or aliases)
+    const peopleMap = {};
+    for (const f of (allFiles ?? [])) {
+      const s = (f.slug ?? "");
+      if (!s.startsWith("people/")) continue;
+      const fm = f.frontmatter ?? {};
+      const t = fm.title;
+      if (t) peopleMap[String(t)] = s;
+      const aliases = fm.aliases ?? fm.alias ?? [];
+      const aliasArr = Array.isArray(aliases) ? aliases : [aliases];
+      for (const a of aliasArr) if (a) peopleMap[String(a)] = s;
+    }
+    const authorLink = (name) => {
+      const single = (n) => {
+        const slug = n ? peopleMap[n] : undefined;
+        if (!slug) return u2("span", { children: [n || ""] });
+        return u2("a", { href: basePath + "/" + slug, class: "internal", children: [n] });
+      };
+      if (Array.isArray(name)) {
+        const parts = [];
+        name.forEach((n, i) => { if (i > 0) parts.push(", "); parts.push(single(String(n))); });
+        return u2("span", { children: parts });
+      }
+      return single(name);
+    };
+
     const rows = children.map((c) => {
       const fm = c.frontmatter ?? {};
       const title = fm.title || c.slug;
@@ -265,7 +291,7 @@ var FolderFilter_default = ((opts) => {
             u2("td", { children: r.tags.map(tagLink) }),
             u2("td", { children: [r.dateStr] }),
             u2("td", { children: [r.source] }),
-            u2("td", { children: [r.author] }),
+            u2("td", { children: [authorLink(r.author)] }),
           ]
         })) }),
       ]
