@@ -3,12 +3,14 @@ title: 王玉春：卫士长回忆林彪在东北
 author: 王玉春
 tags:
   - 工作人员
-  - 解放战争
+  - 45-50解放战争
 publish: 2006-11-22
-来源:
+origin:
   - 网络
 aliases:
   - 王玉春：卫士长回忆林彪在东北
+type: 回忆
+period: 45-50 解放战争
 ---
 
 [文学城](https://blog.wenxuecity.com/myblog/62877/201312/13964.html)

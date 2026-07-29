@@ -1,6 +1,5 @@
 ---
 title: 年谱
-aliases:
 ---
 
 > [!info] 用法

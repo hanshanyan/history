@@ -2,14 +2,17 @@
 title: 刘显宜：敖山庙伏击
 author: 刘显宜
 tags:
-  - 井冈山
+  - 27-28井冈山
   - 战史回忆
   - zlib
 publish: 1958-08-01
-来源:
+origin:
   - 《星火燎原》
 aliases:
   - 刘显宜：敖山庙伏击
+type: 战史回忆
+period: 27-34 土地革命
+event: 1928-02-26
 ---
 *<p align="center">原载《星火燎原一上》</p>*
 <p align="center">刘显宜（1903-1976）</p>

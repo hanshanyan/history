@@ -3,12 +3,14 @@ title: 方顺安：我秘密受命为林彪开车
 author: 方顺安
 tags:
   - 工作人员
-  - 建国后
+  - 50-71建国后
 publish: 2016-02-04
-来源:
+origin:
   - 杂志刊载
 aliases:
   - 方顺安：我秘密受命为林彪开车
+type: 口述史
+period: 50-71 建国后
 ---
 [世纪杂志  方顺安/口述 沈飞德/采访 史怡婷/整理](https://mp.weixin.qq.com/s/n5oNnUz1lqRG-bzPE6opqg)
 

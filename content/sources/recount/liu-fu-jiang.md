@@ -3,12 +3,14 @@ title: 刘甫江：我在林彪身边的日子
 author: 刘甫江
 tags:
   - 工作人员
-  - 建国后
+  - 50-71建国后
 publish: 2009-04-01
-来源:
+origin:
   - 杂志刊载
 aliases:
   - 刘甫江：我在林彪身边的日子
+type: 口述史
+period: 50-71 建国后
 ---
 
 [世纪杂志 人民文摘转载](https://paper.people.com.cn/rmwz/html/2010-02/01/content_503099.htm?div=-1)

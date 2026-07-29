@@ -3,12 +3,14 @@ title: 李德：林彪读书见闻
 author: 李德
 tags:
   - 工作人员
-  - 建国后
+  - 50-71建国后
 publish: 2007-07-20
-来源:
+origin:
   - 网络
 aliases:
   - 李德：林彪读书见闻
+type: 回忆
+period: 50-71 建国后
 ---
 
 [文学城](https://www.wenxuecity.com/blog/200812/39991/20122.html)、[万维：林彪读书废寝忘食最爱看啥书](https://news.creaders.net/china/2007/07/20/739555.html)

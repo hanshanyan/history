@@ -5,12 +5,14 @@ author:
   - 迟泽厚
 tags:
   - 工作人员
-  - 建国后
+  - 50-71建国后
 publish: 2000-11-23
-来源:
+origin:
   - 南方周末
 aliases:
   - 迟泽厚：关光烈谈林彪
+type: 口述史
+period: 50-71 建国后
 ---
 
 [论坛转载](https://difangwenge.org/forum.php?mod=viewthread&tid=10043)

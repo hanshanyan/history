@@ -211,7 +211,7 @@ var FolderFilter_default = ((opts) => {
     if (current === "" || current === "index") return null;
     if (current === "people") return null;
     if (current === "tags") return null;
-    const depth = current.split("/").filter(Boolean).length;
+    const isTagPage = current.startsWith("tags/");
     const allSlugs = new Set((allFiles ?? []).map((f) => f.slug ?? ""));
     const isFolder = (slug) => {
       for (const other of allSlugs) {
@@ -219,14 +219,27 @@ var FolderFilter_default = ((opts) => {
       }
       return false;
     };
-    const children = (allFiles ?? []).filter((f) => {
-      const s = (f.slug ?? "");
-      if (!s) return false;
-      if (!s.startsWith(current + "/")) return false;
-      if (s.endsWith("/index")) return false;       // skip folder index pages
-      if (isFolder(s)) return false;                 // skip folder pages, keep only leaf md
-      return true;                                   // include all descendant levels (penetrate subfolders)
-    });
+    let children;
+    if (isTagPage) {
+      let tagName = current.slice("tags/".length);
+      try { tagName = decodeURIComponent(tagName); } catch (e) {}
+      children = (allFiles ?? []).filter((f) => {
+        const s = (f.slug ?? "");
+        if (!s || s.endsWith("/index")) return false;
+        const fm = f.frontmatter ?? {};
+        const tags = (fm.tags ?? []).map(String);
+        return tags.includes(tagName);
+      });
+    } else {
+      children = (allFiles ?? []).filter((f) => {
+        const s = (f.slug ?? "");
+        if (!s) return false;
+        if (!s.startsWith(current + "/")) return false;
+        if (s.endsWith("/index")) return false;       // skip folder index pages
+        if (isFolder(s)) return false;                 // skip folder pages, keep only leaf md
+        return true;                                   // include all descendant levels (penetrate subfolders)
+      });
+    }
     if (children.length === 0) return null;
 
     const locale = cfg?.locale ?? "zh-CN";
@@ -263,7 +276,7 @@ var FolderFilter_default = ((opts) => {
       const fm = c.frontmatter ?? {};
       const title = fm.title || c.slug;
       const author = fm.author || "";
-      const rawSource = fm.source ?? fm["来源"] ?? fm["source"];
+      const rawSource = fm.origin ?? fm["来源"] ?? fm.source ?? fm["source"];
       const source = Array.isArray(rawSource) ? rawSource.join("、") : (rawSource || "");
       const tags = (fm.tags ?? []).filter(Boolean);
       const dateVal = fm.publish;
@@ -304,7 +317,7 @@ var FolderFilter_default = ((opts) => {
         u2("thead", { children: [u2("tr", { children: [
           colHeader("title", "标题"),
           colHeader("tags", "标签", "", "空格分隔可多选"),
-          colHeader("date", "时间", "desc", "含 或 >1978/<1958"),
+          colHeader("date", "发表时间", "desc", "含 或 >1978/<1958"),
           colHeader("source", "来源"),
           colHeader("author", "作者"),
         ] })] }),

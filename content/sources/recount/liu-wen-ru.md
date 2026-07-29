@@ -5,12 +5,14 @@ author:
   - 刘文儒
 tags:
   - 工作人员
-  - 建国后
+  - 50-71建国后
 publish: 2013-09-10
-来源:
+origin:
   - 华夏文摘
 aliases:
   - 刘文儒：林彪的吃喝拉撒病
+type: 口述史
+period: 50-71 建国后
 ---
 
 [华夏文摘增刊910期 2013.9.10](http://museums.cnd.org/cr/ZK13/cr742.gb.html#4)、[论坛转载](https://difangwenge.org/forum.php?mod=viewthread&tid=8925)

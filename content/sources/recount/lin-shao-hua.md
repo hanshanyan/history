@@ -3,12 +3,14 @@ title: 记者：记林彪亲侄女林少华
 author: 记者
 tags:
   - 亲人
-  - 建国后
+  - 50-71建国后
 publish: 2011-01-01
-来源:
+origin:
   - 杂志刊载
 aliases:
   - 记者：记林彪亲侄女林少华
+type: 回忆
+period: 50-71 建国后
 ---
 [老家有约 | 东楚文化和怀乡编辑部联合推出](https://mp.weixin.qq.com/s/CGoUxSk6sKdTdNgzfOWGVA)
 

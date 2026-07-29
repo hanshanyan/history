@@ -2,14 +2,17 @@
 title: 陈士渠：七溪岭战斗
 author: 陈士渠
 tags:
-  - 井冈山
+  - 27-28井冈山
   - 战史回忆
   - zlib
 publish: 1958-08-01
-来源:
+origin:
   - 《星火燎原》
 aliases:
   - 陈士渠：七溪岭战斗
+type: 战史回忆
+period: 27-34 土地革命
+event: 1928-06-23
 ---
 
 *<p align="center">原载《星火燎原一上》</p>*

@@ -3,12 +3,14 @@ title: 楚成瑞：我给林彪治“怪病”
 author: 楚成瑞
 tags:
   - 工作人员
-  - 解放战争
+  - 45-50解放战争
 publish: 2006-11-22
-来源:
+origin:
   - 南方周末
 aliases:
   - 楚成瑞：我给林彪治“怪病”
+type: 口述史
+period: 45-50 解放战争
 ---
 
 [文学城](https://blog.wenxuecity.com/myblog/62877/201312/13972.html)、[凤凰网](https://news.ifeng.com/history/200611/1122_25_36747.shtml)

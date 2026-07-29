@@ -3,12 +3,15 @@ title: 舒云：1966年毛泽东“五七指示”的由来
 author: 舒云
 tags:
   - 
-  - 建国后
+  - 50-71建国后
 publish: 2011-01-01
-来源:
+origin:
   - 杂志刊载
 aliases:
   - 舒云：1966年毛泽东“五七指示”的由来
+type: 散论
+period: 50-71 建国后
+event: 1966-05-07
 ---
 
 [《文史参考》2011年第13期](https://mp.weixin.qq.com/s/JZQCURK4lN0GcduSu28vUw)

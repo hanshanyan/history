@@ -3,12 +3,15 @@ title: 老卓：我陪林彪上佘山
 author: 相关人士
 tags:
   - 相关人士
-  - 建国后
+  - 50-71建国后
 publish: 2026-04-25
-来源:
+origin:
   - 网络
 aliases:
   - 老卓：我陪林彪上佘山
+type: 口述史
+event: 1963-03-01
+period: 50-71 建国后
 ---
 
 [文学城](https://blog.wenxuecity.com/myblog/38115/202604/16395.html)
