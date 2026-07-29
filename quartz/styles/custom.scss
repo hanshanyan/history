@@ -263,11 +263,11 @@ a.internal.tag-link:hover {
       flex: 0 0 auto;
     }
 
-    // 站点标题：短标题自适应，不再硬压到 6rem
+    // 站点标题：短标题自适应，可收缩给搜索让位
     & > .page-title {
       font-size: 1rem !important;
       order: 2;
-      flex: 0 0 auto;
+      flex: 0 1 auto;
       max-width: none;
       white-space: nowrap;
       overflow: hidden;
@@ -275,13 +275,13 @@ a.internal.tag-link:hover {
       margin: 0;
     }
 
-    // spacer：占据标题与工具组之间的剩余空间，把搜索/主题/阅读模式推到右侧
+    // spacer：只提供标题与搜索之间的自然小空隙
     // 注意 spacer 被 mobile-only wrapper 包裹，直接让 wrapper 成为 flex item
     & > .mobile-only {
       order: 3;
       display: block !important;
-      flex: 1 1 auto !important;
-      min-width: 0;
+      flex: 0 0 0.5rem !important;
+      min-width: 0.5rem;
 
       & > .spacer {
         display: block;
@@ -290,11 +290,16 @@ a.internal.tag-link:hover {
       }
     }
 
-    // toolbar 组（搜索 / 主题 / 阅读模式）：在 spacer 右侧靠右排列
+    // toolbar 组（搜索 / 主题）：紧随标题自然左起排列
     & > .flex-component {
       order: 4;
       flex: 0 0 auto;
       min-width: 0;
+    }
+
+    // 手机端隐藏阅读模式（容易误触且 unnecessary）
+    & .readermode {
+      display: none !important;
     }
 
     // Explorer 展开/折叠按钮左边距，避免 > 贴到屏幕边缘
@@ -309,12 +314,15 @@ a.internal.tag-link:hover {
     }
   }
 
-  // 搜索框在顶栏内只保留图标，腾出横向空间
+  // 搜索框在顶栏内显示图标 + Search 文字
   .left.sidebar .search > .search-button {
-    padding: 0 0.35rem;
+    padding: 0 0.5rem;
+    gap: 0.35rem;
   }
   .left.sidebar .search > .search-button > p {
-    display: none;
+    display: inline-block !important;
+    margin: 0;
+    white-space: nowrap;
   }
 
   // 文章页眉里的标签列表在手机上更紧凑
