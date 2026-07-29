@@ -230,8 +230,8 @@ var FolderFilter_default = ((opts) => {
       return String(a.title).localeCompare(String(b.title), locale);
     });
 
-    const colHeader = (key, label) => u2("th", {
-      class: "sortable",
+    const colHeader = (key, label, sortClass = "") => u2("th", {
+      class: "sortable" + (sortClass ? " " + sortClass : ""),
       "data-col": key,
       children: [label, u2("span", { class: "sort-indicator" }), u2("input", { type: "text", "data-filter": key, placeholder: "包含" })]
     });
@@ -248,7 +248,7 @@ var FolderFilter_default = ((opts) => {
         u2("thead", { children: [u2("tr", { children: [
           colHeader("title", "标题"),
           colHeader("author", "作者"),
-          colHeader("date", "时间"),
+          colHeader("date", "时间", "desc"),
           colHeader("source", "来源"),
           colHeader("tags", "标签"),
         ] })] }),

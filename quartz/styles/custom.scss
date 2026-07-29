@@ -275,13 +275,13 @@ a.internal.tag-link:hover {
       margin: 0;
     }
 
-    // spacer：只提供标题与搜索之间的自然小空隙
+    // spacer：提供标题与搜索之间的自然空隙
     // 注意 spacer 被 mobile-only wrapper 包裹，直接让 wrapper 成为 flex item
     & > .mobile-only {
       order: 3;
       display: block !important;
-      flex: 0 0 0.5rem !important;
-      min-width: 0.5rem;
+      flex: 0 0 3rem !important;
+      min-width: 3rem;
 
       & > .spacer {
         display: block;
@@ -497,5 +497,21 @@ ul.toc-content .depth-5 > a,
 // 组件规则 .page-title{font-family:var(--titleFont)} 与 --titleFont 变量均已正确，
 // 此处再 !important 强制一次，排除任何级联/变量解析导致的"字体没生效"疑点。
 .page-title {
+  font-family: "Zhi Mang Xing", "Noto Sans SC", system-ui, sans-serif !important;
+}
+
+// —— 所有 Markdown 标题（文章内 h1-h6）统一使用 Zhi Mang Xing ——
+.page article h1,
+.page article h2,
+.page article h3,
+.page article h4,
+.page article h5,
+.page article h6,
+.page-header h1,
+.page-header h2,
+.page-header h3,
+.page-header h4,
+.page-header h5,
+.page-header h6 {
   font-family: "Zhi Mang Xing", "Noto Sans SC", system-ui, sans-serif !important;
 }
