@@ -49,6 +49,8 @@ var folderFilter_inline = `(function(){
   function apply(){
     var table = document.querySelector('.folder-table');
     if (!table) return;
+    if (table.dataset.ffBound) return;
+    table.dataset.ffBound = '1';
     var tbody = table.querySelector('tbody');
     if (!tbody) return;
     var slug = document.body.getAttribute('data-slug') || '';
