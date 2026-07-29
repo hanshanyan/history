@@ -107,6 +107,32 @@ var folderFilter_inline = `(function(){
         var ok = true;
         for (var k in filters){
           if (!filters[k]) continue;
+          if (k === 'tags'){
+            var reqs = filters[k].split(/\s+/).filter(Boolean);
+            var rowTags = (row.getAttribute('data-tags') || '').toLowerCase().split(/\s+/);
+            var tagOk = true;
+            for (var ri=0; ri<reqs.length; ri++){
+              if (rowTags.indexOf(reqs[ri]) === -1){ tagOk = false; break; }
+            }
+            if (!tagOk){ ok = false; break; }
+            continue;
+          }
+          if (k === 'date'){
+            var dv = filters[k];
+            var opm = dv.match(/^(>=|<=|>|<)(\d{4})$/);
+            if (opm){
+              var op = opm[1], y = parseInt(opm[2],10);
+              var dm = (row.children[2] ? row.children[2].textContent : '').match(/(\d{4})/);
+              var ry = dm ? parseInt(dm[1],10) : null;
+              var dateOk = ry !== null;
+              if (op === '>') dateOk = ry > y;
+              else if (op === '<') dateOk = ry < y;
+              else if (op === '>=') dateOk = ry >= y;
+              else if (op === '<=') dateOk = ry <= y;
+              if (!dateOk){ ok = false; break; }
+              continue;
+            }
+          }
           var idx = {title:0, tags:1, date:2, source:3, author:4}[k];
           var text = (row.children[idx] ? row.children[idx].textContent : '').trim().toLowerCase();
           if (text.indexOf(filters[k]) === -1){ ok = false; break; }
@@ -183,6 +209,7 @@ var FolderFilter_default = ((opts) => {
     let current = (fileData?.slug ?? "");
     if (current.endsWith("/index")) current = current.slice(0, -"/index".length);
     if (current === "" || current === "index") return null;
+    if (current === "people") return null;
     const depth = current.split("/").filter(Boolean).length;
     const allSlugs = new Set((allFiles ?? []).map((f) => f.slug ?? ""));
     const isFolder = (slug) => {
@@ -258,10 +285,10 @@ var FolderFilter_default = ((opts) => {
       return String(a.title).localeCompare(String(b.title), locale);
     });
 
-    const colHeader = (key, label, sortClass = "") => u2("th", {
+    const colHeader = (key, label, sortClass = "", placeholder = "包含") => u2("th", {
       class: "sortable" + (sortClass ? " " + sortClass : ""),
       "data-col": key,
-      children: [label, u2("span", { class: "sort-indicator" }), u2("input", { type: "text", "data-filter": key, placeholder: "包含" })]
+      children: [label, u2("span", { class: "sort-indicator" }), u2("input", { type: "text", "data-filter": key, placeholder: placeholder })]
     });
 
     const tagLink = (tag) => u2("span", { class: "tag-pill", children: [
@@ -275,8 +302,8 @@ var FolderFilter_default = ((opts) => {
       children: [
         u2("thead", { children: [u2("tr", { children: [
           colHeader("title", "标题"),
-          colHeader("tags", "标签"),
-          colHeader("date", "时间", "desc"),
+          colHeader("tags", "标签", "", "空格分隔可多选"),
+          colHeader("date", "时间", "desc", "含 或 >1978/<1958"),
           colHeader("source", "来源"),
           colHeader("author", "作者"),
         ] })] }),

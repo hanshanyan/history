@@ -402,7 +402,7 @@ var defaultOptions = {
     }
     return -1;
   },
-  filterFn: (node) => node.slugSegment !== "tags",
+  filterFn: (node) => node.slugSegment !== "tags" && !node.slug.startsWith("people/"),
   order: ["filter", "map", "sort"]
 };
 var numExplorers = 0;
