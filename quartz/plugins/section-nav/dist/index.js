@@ -88,6 +88,7 @@ var ITEMS = [
   { key: "timeline", label: "年谱", target: "timeline" },
   { key: "sources", label: "史料", target: "sources" },
   { key: "analysis", label: "史论", target: "analysis" },
+  { key: "tags", label: "标签", target: "tags" },
 ];
 
 function pathToRoot(slug) {
