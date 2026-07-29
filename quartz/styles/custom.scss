@@ -140,10 +140,11 @@
   .page > #quartz-body > .left.sidebar .toc:has(button.toc-header.collapsed) .toc-content {
     display: none;
   }
-  // 关掉探索/目录/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见
+  // 关掉探索/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见。
+  // 注意：ToC 的 ul.toc-content.overflow 要排除，否则展开内容会溢出覆盖下方 Tag。
   .page > #quartz-body > .left.sidebar div:has(> .overflow),
   .page > #quartz-body > .left.sidebar .explorer-content,
-  .page > #quartz-body > .left.sidebar ul.overflow,
+  .page > #quartz-body > .left.sidebar ul.overflow:not(.toc-content),
   .page > #quartz-body > .left.sidebar .backlinks > ul.overflow {
     overflow: visible;
     max-height: none;

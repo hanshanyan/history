@@ -33,6 +33,10 @@ header,.page-header{margin-top:1.5rem !important}
 
 // client script: keep the active item in sync on SPA navigation
 var sectionNav_inline = `(function(){
+  // 初始禁用 smooth scroll，避免页面加载/恢复滚动位置时不自然下滑；
+  // load 完成后恢复，保留后续锚点/footnote 点击的平滑滚动。
+  document.documentElement.style.scrollBehavior = 'auto';
+  window.addEventListener('load', function(){ document.documentElement.style.scrollBehavior = ''; });
   function update(){
     var nav = document.querySelector('.section-nav');
     if(!nav) return;
