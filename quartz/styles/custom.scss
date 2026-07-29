@@ -232,7 +232,7 @@ a.internal.tag-link:hover {
     padding: 0 0.5rem !important;
     margin: 0 !important;
     width: 100%;
-    gap: 0.5rem;
+    gap: 0.35rem;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
@@ -254,32 +254,6 @@ a.internal.tag-link:hover {
       display: none !important;
     }
 
-    // 站点标题：缩小、可收缩、超出省略
-    & > .page-title {
-      font-size: 1rem !important;
-      order: 2;
-      flex: 0 1 auto;
-      max-width: 6rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 0;
-    }
-
-    // 占位 spacer：把工具组推到右侧
-    & > .spacer {
-      order: 3;
-      flex: 1 1 auto !important;
-      min-width: 0;
-    }
-
-    // toolbar 组（搜索 / 主题 / 阅读模式）：靠右，允许收缩
-    & > .flex-component {
-      order: 4;
-      flex: 0 1 auto;
-      min-width: 0;
-    }
-
     // Explorer / 汉堡：放到最左侧，紧贴左边缘
     & > .explorer {
       order: 1;
@@ -287,6 +261,41 @@ a.internal.tag-link:hover {
       padding: 0;
       margin: 0;
       flex: 0 0 auto;
+    }
+
+    // 站点标题：短标题自适应，不再硬压到 6rem
+    & > .page-title {
+      font-size: 1rem !important;
+      order: 2;
+      flex: 0 0 auto;
+      max-width: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    // spacer：不再把工具组推到右侧，让顶栏元素整体左起
+    & > .spacer {
+      order: 3;
+      flex: 0 0 0 !important;
+      min-width: 0;
+      display: none;
+    }
+
+    // 搜索框：紧跟标题
+    & > .search {
+      order: 4;
+      flex: 0 0 auto;
+      min-width: 2rem;
+      max-width: 5rem;
+    }
+
+    // toolbar 组（主题 / 阅读模式）：靠左排列
+    & > .flex-component {
+      order: 5;
+      flex: 0 0 auto;
+      min-width: 0;
     }
 
     // Explorer 展开/折叠按钮左边距，避免 > 贴到屏幕边缘
@@ -301,13 +310,12 @@ a.internal.tag-link:hover {
     }
   }
 
-  // 搜索框在顶栏内限制最大宽度，防止把其他按钮挤出屏幕
-  .left.sidebar .search {
-    max-width: 7rem;
-    min-width: 2rem;
-  }
+  // 搜索框在顶栏内只保留图标，腾出横向空间
   .left.sidebar .search > .search-button {
-    padding-right: 0.5rem;
+    padding: 0 0.35rem;
+  }
+  .left.sidebar .search > .search-button > p {
+    display: none;
   }
 
   // 文章页眉里的标签列表在手机上更紧凑
@@ -368,18 +376,19 @@ a.internal.tag-link:hover {
   .explorer .mobile-explorer {
     display: flex !important;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     width: 34px;
     height: 34px;
     padding: 5px;
-    padding-left: 0;
     margin: 0;
     box-sizing: border-box;
     background: var(--light);
     border: 1px solid var(--lightgray);
-    border-left: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     color: var(--dark);
+    // 关键：汉堡必须始终位于抽屉之上，官方也是 z-index:101
+    position: relative;
+    z-index: 101;
   }
   .explorer .mobile-explorer .lucide-menu {
     stroke: var(--dark) !important;
@@ -389,21 +398,20 @@ a.internal.tag-link:hover {
   }
 
   // —— 修复移动端抽屉（Explorer / ToC）无法滚动到底 ——
-  // 改为固定定位（相对视口）并开启纵向滚动，长目录可滑到末尾
+  // 抽屉固定在 section-nav(44px) + 顶栏(48px) 下方，不再覆盖汉堡按钮
   .explorer .explorer-content {
     position: fixed !important;
-    top: 0;
+    top: 92px;
     left: 0;
     display: block !important;
     width: min(86vw, 340px);
-    height: 100dvh;
-    max-height: 100dvh;
+    height: calc(100dvh - 92px);
+    max-height: calc(100dvh - 92px);
     overflow-y: auto !important;
     overscroll-behavior: contain;
-    // 顶部留白避开两条固定栏（section-nav 44px + 顶栏 48px ≈ 92px）
-    padding: 5.5rem 1rem 3rem 1rem;
-    // 低于顶栏(999)/导航栏(1000)，保证汉堡按钮始终可点关闭抽屉
-    z-index: 998;
+    padding: 1rem;
+    // 抽屉层级低于汉堡(101)与顶栏(999)/导航栏(1000)，保证汉堡始终可点
+    z-index: 100;
     background: var(--light);
     border-right: 1px solid var(--lightgray);
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
