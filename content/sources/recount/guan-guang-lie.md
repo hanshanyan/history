@@ -1,14 +1,16 @@
 ---
 title: 迟泽厚：关光烈谈林彪
-author: 关光烈
+author:
+  - 关光烈
+  - 迟泽厚
 tags:
-- 工作人员
-- 建国后
+  - 工作人员
+  - 建国后
 publish: 2000-11-23
 来源:
-- 南方周末
+  - 南方周末
 aliases:
-- 迟泽厚：关光烈谈林彪
+  - 迟泽厚：关光烈谈林彪
 ---
 
 [论坛转载](https://difangwenge.org/forum.php?mod=viewthread&tid=10043)
