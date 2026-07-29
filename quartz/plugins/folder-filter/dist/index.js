@@ -210,6 +210,7 @@ var FolderFilter_default = ((opts) => {
     if (current.endsWith("/index")) current = current.slice(0, -"/index".length);
     if (current === "" || current === "index") return null;
     if (current === "people") return null;
+    if (current === "tags") return null;
     const depth = current.split("/").filter(Boolean).length;
     const allSlugs = new Set((allFiles ?? []).map((f) => f.slug ?? ""));
     const isFolder = (slug) => {
