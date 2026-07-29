@@ -23,11 +23,11 @@ var f2 = 0;
 
 // styles
 var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}
-.folder-table th:nth-child(2){width:75px}
+.folder-table th:nth-child(2){width:250px}
 .folder-table th:nth-child(3){width:90px}
 .folder-table th:nth-child(4){width:110px}
-.folder-table th:nth-child(5){width:250px}
-@media (max-width:800px){.folder-filter{overflow-x:auto;-webkit-overflow-scrolling:touch}.folder-table{table-layout:fixed;min-width:calc(100vw + 270px)}.folder-table th:nth-child(1),.folder-table td:nth-child(1){width:60vw;white-space:normal;word-break:break-word}.folder-table th:nth-child(2),.folder-table td:nth-child(2){width:70px;white-space:nowrap}.folder-table th:nth-child(3),.folder-table td:nth-child(3){width:90px;white-space:nowrap}.folder-table th:nth-child(4),.folder-table td:nth-child(4){width:110px;word-break:break-word}.folder-table th:nth-child(5),.folder-table td:nth-child(5){width:40vw;min-width:100px;white-space:normal;word-break:break-word}.folder-table th input{display:none}}
+.folder-table th:nth-child(5){width:75px}
+@media (max-width:800px){.folder-filter{overflow-x:auto;-webkit-overflow-scrolling:touch}.folder-table{table-layout:fixed;min-width:calc(100vw + 270px)}.folder-table th:nth-child(1),.folder-table td:nth-child(1){width:60vw;white-space:normal;word-break:break-word}.folder-table th:nth-child(2),.folder-table td:nth-child(2){width:40vw;min-width:100px;white-space:normal;word-break:break-word}.folder-table th:nth-child(3),.folder-table td:nth-child(3){width:90px;white-space:nowrap}.folder-table th:nth-child(4),.folder-table td:nth-child(4){width:110px;word-break:break-word}.folder-table th:nth-child(5),.folder-table td:nth-child(5){width:70px;white-space:nowrap}.folder-table th input{display:none}}
 .folder-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
 .folder-table td:nth-child(1),.folder-table td:nth-child(2),.folder-table td:nth-child(4){word-break:break-word}
 .folder-table th,.folder-table td{padding:.5rem .6rem;text-align:left;border-bottom:1px solid var(--lightgray)}
@@ -64,7 +64,7 @@ var folderFilter_inline = `(function(){
     function getRows(){ return Array.prototype.slice.call(tbody.querySelectorAll('tr[data-title]')); }
     function sortBy(col, dir){
       var rows = getRows();
-      var idx = {title:0, author:1, date:2, source:3, tags:4}[col];
+      var idx = {title:0, tags:1, date:2, source:3, author:4}[col];
       if (idx == null) return;
       rows.sort(function(a,b){
         var av, bv;
@@ -107,7 +107,7 @@ var folderFilter_inline = `(function(){
         var ok = true;
         for (var k in filters){
           if (!filters[k]) continue;
-          var idx = {title:0, author:1, date:2, source:3, tags:4}[k];
+          var idx = {title:0, tags:1, date:2, source:3, author:4}[k];
           var text = (row.children[idx] ? row.children[idx].textContent : '').trim().toLowerCase();
           if (text.indexOf(filters[k]) === -1){ ok = false; break; }
         }
@@ -249,10 +249,10 @@ var FolderFilter_default = ((opts) => {
       children: [
         u2("thead", { children: [u2("tr", { children: [
           colHeader("title", "标题"),
-          colHeader("author", "作者"),
+          colHeader("tags", "标签"),
           colHeader("date", "时间", "desc"),
           colHeader("source", "来源"),
-          colHeader("tags", "标签"),
+          colHeader("author", "作者"),
         ] })] }),
         u2("tbody", { children: rows.map((r) => u2("tr", {
           "data-title": r.title,
@@ -262,10 +262,10 @@ var FolderFilter_default = ((opts) => {
           "data-tags": r.tags.join(" "),
           children: [
             u2("td", { children: [u2("a", { href: basePath + "/" + r.slug, class: "internal", children: [r.title] })] }),
-            u2("td", { children: [r.author] }),
+            u2("td", { children: r.tags.map(tagLink) }),
             u2("td", { children: [r.dateStr] }),
             u2("td", { children: [r.source] }),
-            u2("td", { children: r.tags.map(tagLink) }),
+            u2("td", { children: [r.author] }),
           ]
         })) }),
       ]
