@@ -130,9 +130,10 @@
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  // 关键：禁止左栏子项被 flex 压缩——否则探索/目录会被压成一条缝
-  // 但 .toc 必须允许收缩（见下方折叠修复），否则折叠态收不回一行
-  .page > #quartz-body > .left.sidebar > *:not(.toc) {
+  // 关键：禁止左栏子项被 flex 压缩——否则探索/目录会被压成一条缝。
+  // 目录折叠态由下方 :has(.collapsed) 规则隐藏内容，展开态自然撑开；
+  // .toc 也需要 flex-shrink:0，避免被压缩导致展开内容重叠下方 Tag。
+  .page > #quartz-body > .left.sidebar > * {
     flex-shrink: 0;
   }
   // 修复 ToC 折叠“虚影”：折叠态直接隐藏目录内容，
@@ -140,11 +141,11 @@
   .page > #quartz-body > .left.sidebar .toc:has(button.toc-header.collapsed) .toc-content {
     display: none;
   }
-  // 关掉探索/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见。
-  // 注意：ToC 的 ul.toc-content.overflow 要排除，否则展开内容会溢出覆盖下方 Tag。
+  // 关掉探索/目录/反向链接各自的内部滚动，统一由左栏滚动，内容完整可见。
+  // ToC 展开后自然撑开，All-Tags 排在下方，只保留左栏一个滚动条。
   .page > #quartz-body > .left.sidebar div:has(> .overflow),
   .page > #quartz-body > .left.sidebar .explorer-content,
-  .page > #quartz-body > .left.sidebar ul.overflow:not(.toc-content),
+  .page > #quartz-body > .left.sidebar ul.overflow,
   .page > #quartz-body > .left.sidebar .backlinks > ul.overflow {
     overflow: visible;
     max-height: none;
