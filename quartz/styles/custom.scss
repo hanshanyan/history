@@ -280,7 +280,7 @@ a.internal.tag-link:hover {
 
     // 站点标题：短标题自适应，可收缩给搜索让位
     & > .page-title {
-      font-size: 1rem !important;
+      font-size: 1.3rem !important;
       order: 2;
       flex: 0 1 auto;
       max-width: none;
@@ -488,20 +488,26 @@ li[id^="user-content-fn"] {
   scroll-margin-top: 35vh;
 }
 
+// —— Explorer 文章标题（如"刘显宜：敖山庙战斗"）字号，文件夹标题（史料等）保持 0.95rem 不变 ——
+// 仅命中文件链接 .explorer-content ul li > a，命中不到 .folder-container div > a（文件夹标题）
+.explorer .explorer-content ul li > a {
+  font-size: 0.8rem !important;
+}
+
 // —— 目录(ToC)各级标题字号从大到小：桌面端 + 移动端统一 ——
 // 桌面端用 .toc-content，手机端汉堡抽屉里克隆出的目录用 .mobile-toc，两边字号层级一致
 ul.toc-content .depth-0 > a,
-.mobile-toc li.depth-0 > a { font-size: 1.05rem; font-weight: 600; }
+.mobile-toc li.depth-0 > a { font-size: 0.95rem; font-weight: 600; }
 ul.toc-content .depth-1 > a,
-.mobile-toc li.depth-1 > a { font-size: 0.98rem; }
+.mobile-toc li.depth-1 > a { font-size: 0.88rem; }
 ul.toc-content .depth-2 > a,
-.mobile-toc li.depth-2 > a { font-size: 0.92rem; }
+.mobile-toc li.depth-2 > a { font-size: 0.82rem; }
 ul.toc-content .depth-3 > a,
-.mobile-toc li.depth-3 > a { font-size: 0.87rem; }
+.mobile-toc li.depth-3 > a { font-size: 0.77rem; }
 ul.toc-content .depth-4 > a,
-.mobile-toc li.depth-4 > a { font-size: 0.83rem; }
+.mobile-toc li.depth-4 > a { font-size: 0.73rem; }
 ul.toc-content .depth-5 > a,
-.mobile-toc li.depth-5 > a { font-size: 0.80rem; }
+.mobile-toc li.depth-5 > a { font-size: 0.70rem; }
 
 // —— Recent Notes：桌面端一行 3 个，两行正好 6 条 ——
 .recent-notes > ul.recent-ul {
