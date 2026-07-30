@@ -25,7 +25,7 @@ var f2 = 0;
 var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}.folder-filter{overflow-x:auto}
 .folder-table th:nth-child(1){width:290px}
 .folder-table th:nth-child(2){width:90px}
-.folder-table th:nth-child(3){width:250px}
+.folder-table th:nth-child(3){width:245px}
 .folder-table th:nth-child(4){width:110px}
 .folder-table th:nth-child(5){width:75px}.folder-table td:nth-child(2),.folder-table td:nth-child(4),.folder-table td:nth-child(5),.folder-table th:nth-child(2),.folder-table th:nth-child(4),.folder-table th:nth-child(5){white-space:nowrap}
 @media (max-width:800px){.folder-filter{overflow-x:auto;-webkit-overflow-scrolling:touch}.folder-table{table-layout:fixed;width:calc(100% + 270px)}.folder-table th{font-size:.85rem}.folder-table th:nth-child(1),.folder-table td:nth-child(1){width:242px;min-width:0;font-size:.85rem;white-space:normal;word-break:break-word}.folder-table th:nth-child(2),.folder-table td:nth-child(2){width:90px;white-space:nowrap}.folder-table th:nth-child(3),.folder-table td:nth-child(3){width:135px;min-width:0;white-space:normal;word-break:break-word}.folder-table th:nth-child(4),.folder-table td:nth-child(4){width:110px;word-break:break-word}.folder-table th:nth-child(5),.folder-table td:nth-child(5){width:70px;white-space:nowrap}.folder-table th input{display:none}.folder-table th .date-controls{display:block}.folder-table th .date-controls select{width:100%}}
@@ -43,7 +43,7 @@ var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin
 .folder-table td a.internal{text-decoration:none}
 .folder-table td a.internal:hover{text-decoration:underline}
 .folder-table .tag-pill{display:inline-block;margin:0 .35rem .25rem 0;font-size:.85rem}
-.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}.folder-table th select.date-mode{display:block;width:100%;margin-top:.25rem;padding:.25rem .35rem;font:inherit;font-weight:400;border:1px solid var(--lightgray);border-radius:4px;background:var(--light);color:var(--dark)}.folder-table th .date-controls{display:flex;gap:.2rem;margin-top:.25rem;align-items:center}.folder-table th .date-controls select{width:auto;flex:0 0 auto;margin-top:0;padding:.1rem .2rem;font-size:.75rem}.folder-table th .date-controls input{flex:1 1 auto;min-width:0;margin-top:0;padding:.15rem .25rem;font-size:.78rem}.folder-table th input[data-date-year]:disabled{opacity:.5;cursor:not-allowed}`;
+.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}.folder-table th select.date-mode{display:block;width:100%;margin-top:.25rem;padding:.25rem .35rem;font:inherit;font-weight:400;border:1px solid var(--lightgray);border-radius:4px;background:var(--light);color:var(--dark)}.folder-table th .date-controls{display:flex;gap:.2rem;margin-top:.25rem;align-items:center}.folder-table th .date-controls select{width:auto;flex:0 0 auto;margin-top:0;padding:.25rem .35rem;font:inherit;font-weight:400;border:1px solid var(--lightgray);border-radius:4px;background:var(--light);color:var(--dark)}.folder-table th .date-controls input{flex:1 1 auto;min-width:0;margin-top:0;padding:.25rem .35rem;font:inherit;font-weight:400;border:1px solid var(--lightgray);border-radius:4px;background:var(--light);color:var(--dark)}.folder-table th input[data-date-year]:disabled{opacity:.5;cursor:not-allowed}`;
 
 // client script (runs via afterDOMLoaded)
 var folderFilter_inline = `(function(){
