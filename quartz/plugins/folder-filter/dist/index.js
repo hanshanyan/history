@@ -22,7 +22,7 @@ function u2(e2, t2, n2, o2, i2, u3) {
 var f2 = 0;
 
 // styles
-var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}.folder-filter{overflow-x:auto}
+var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:auto}.folder-filter{overflow-x:auto}
 .folder-table th:nth-child(2){width:90px}
 .folder-table th:nth-child(3){width:250px}
 .folder-table th:nth-child(4){width:110px}
