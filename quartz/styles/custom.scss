@@ -436,6 +436,37 @@ a.internal.tag-link:hover {
     max-height: none !important;
     overflow: visible !important;
   }
+
+  // —— 抽屉内的「全部标签」：克隆自左侧栏 .all-tags，位于目录下方 ——
+  .explorer .explorer-content .all-tags.mobile-all-tags {
+    display: block !important;
+    margin: 1.25rem 0 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--lightgray);
+
+    & > h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray);
+      margin: 0 0 0.5rem;
+    }
+
+    & > .tags {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0;
+      padding: 0;
+
+      & > li {
+        display: inline-block;
+        white-space: nowrap;
+        margin: 0;
+      }
+    }
+  }
 }
 
 // 脚注锚点跳转后位于屏幕中间附近，避免被顶栏或段间距遮挡（电脑/手机通用）
