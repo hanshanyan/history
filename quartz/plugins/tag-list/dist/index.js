@@ -93,8 +93,13 @@ var TagList = ({ fileData, displayClass }) => {
   const frontmatter = fileData.frontmatter;
   const tags = frontmatter?.tags;
   const publish = formatPublishDate(frontmatter?.publish);
-  if ((tags && tags.length > 0) || publish) {
+  const rawOrigin = frontmatter?.origin ?? frontmatter?.["来源"] ?? frontmatter?.source;
+  const originVal = Array.isArray(rawOrigin) ? rawOrigin.join("、") : (rawOrigin || "");
+  if ((tags && tags.length > 0) || publish || originVal) {
     const children = [];
+    if (originVal) {
+      children.push(/* @__PURE__ */ u2("li", { class: "meta-origin", children: originVal }));
+    }
     if (publish) {
       children.push(/* @__PURE__ */ u2("li", { class: "publish-date", children: publish }));
     }

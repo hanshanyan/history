@@ -222,6 +222,19 @@ a.internal.tag-link:hover {
   background: var(--gray, #b8b8b8);
 }
 
+// —— 文章页「来源」字段（tag-list 行首，origin / 来源 / source）——
+// 与 publish-date 同处一行，用强调色区分，标识文章出处
+.tags > li.meta-origin {
+  border-radius: 8px;
+  background-color: var(--secondary, #284b63);
+  color: var(--light, #fafafa);
+  padding: 0.2rem 0.4rem;
+  margin: 0 0.1rem;
+  font-size: 0.85rem;
+  font-family: var(--bodyFont);
+  white-space: nowrap;
+}
+
 // —— 移动端优化：左侧边栏只保留核心工具（站点标题/搜索/主题/探索器），目录/标签云/反向链接收起 ——
 @media all and ($mobile) {
   // 强制移除 body/容器水平内边距，避免顶栏左右留白
