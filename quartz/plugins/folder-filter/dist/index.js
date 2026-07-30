@@ -22,11 +22,12 @@ function u2(e2, t2, n2, o2, i2, u3) {
 var f2 = 0;
 
 // styles
-var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:auto}.folder-filter{overflow-x:auto}
+var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}.folder-filter{overflow-x:auto}
+.folder-table th:nth-child(1){width:300px}
 .folder-table th:nth-child(2){width:90px}
 .folder-table th:nth-child(3){width:250px}
 .folder-table th:nth-child(4){width:110px}
-.folder-table th:nth-child(5){width:75px}.folder-table th:nth-child(1),.folder-table td:nth-child(1){min-width:200px}.folder-table td:nth-child(2),.folder-table td:nth-child(4),.folder-table td:nth-child(5),.folder-table th:nth-child(4),.folder-table th:nth-child(5){white-space:nowrap}
+.folder-table th:nth-child(5){width:75px}.folder-table td:nth-child(2),.folder-table td:nth-child(4),.folder-table td:nth-child(5),.folder-table th:nth-child(2),.folder-table th:nth-child(4),.folder-table th:nth-child(5){white-space:nowrap}
 @media (max-width:800px){.folder-filter{overflow-x:auto;-webkit-overflow-scrolling:touch}.folder-table{table-layout:fixed;width:calc(100% + 270px)}.folder-table th{font-size:.85rem}.folder-table th:nth-child(1),.folder-table td:nth-child(1){width:242px;min-width:0;font-size:.85rem;white-space:normal;word-break:break-word}.folder-table th:nth-child(2),.folder-table td:nth-child(2){width:90px;white-space:nowrap}.folder-table th:nth-child(3),.folder-table td:nth-child(3){width:122px;min-width:0;white-space:normal;word-break:break-word}.folder-table th:nth-child(4),.folder-table td:nth-child(4){width:110px;word-break:break-word}.folder-table th:nth-child(5),.folder-table td:nth-child(5){width:70px;white-space:nowrap}.folder-table th input{display:none}.folder-table th .date-controls{display:block}.folder-table th .date-controls select{width:100%}}
 .folder-table td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums}
 .folder-table td:nth-child(1){word-break:break-word}
