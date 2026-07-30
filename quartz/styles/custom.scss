@@ -517,3 +517,101 @@ ul.toc-content .depth-5 > a,
 .page-header h6 {
   font-family: "Zhi Mang Xing", "Noto Sans SC", system-ui, sans-serif !important;
 }
+
+// ============================================================
+//  Tag Index 页面优化（双端）
+//  - 手机端：隐藏文章后标签 + 紧凑行距（对齐官方）
+//  - 桌面端：保留标签但不换行 + 紧凑行距
+//
+//  注意：@quartz-community/tag-page 外部插件自带 PageList 副本，
+//  无法通过修改 quartz/components/PageList.tsx 影响，故使用
+//  body[data-slug^="tags/"] 选择器精准定位所有标签页。
+// ============================================================
+
+// —— 标签页文章列表：通用紧凑化 ——
+body[data-slug^="tags/"] {
+  // 每个 .section-ul 列表（外部插件生成的文章列表）
+  .section-ul {
+    & > .section-li {
+      margin-bottom: 0.25rem;
+      &:last-child { margin-bottom: 0; }
+
+      & > .section {
+        padding: 0.2rem 0;
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        flex-wrap: nowrap;
+
+        & > .meta {
+          margin: 0;
+          flex-shrink: 0;
+          font-size: 0.85rem;
+          min-width: fit-content;
+        }
+
+        & > .desc {
+          margin: 0;
+          min-width: 0;
+          flex: 1;
+
+          & > h3 {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.5;
+          }
+        }
+
+        // 文章后的标签：桌面端保留但尽量不换行
+        & > .tags {
+          flex-shrink: 0;
+          margin: 0;
+          gap: 0.3rem;
+          font-size: 0.78rem;
+
+          & a.internal.tag-link {
+            padding: 0.08rem 0.4rem;
+            font-size: 0.78rem;
+          }
+        }
+      }
+    }
+  }
+
+  // 标签页的 h2（每个 tag 的标题）紧凑化
+  .page-listing > h2 {
+    margin: 0.6rem 0 0.25rem;
+    font-size: 1.15rem;
+  }
+  // "N items with this tag" 提示文字紧凑
+  .page-listing > p {
+    margin: 0 0 0.2rem;
+    font-size: 0.85rem;
+    color: var(--darkgray);
+  }
+}
+
+// —— 手机端：标签页隐藏文章后标签 + 进一步紧凑 ——
+@media all and ($mobile) {
+  body[data-slug^="tags/"] .section-ul > .section-li > .section {
+    // 隐藏每篇文章后面的标签（官方手机端不显示）
+    & > .tags {
+      display: none !important;
+    }
+    gap: 0.5rem;
+    align-items: baseline;
+
+    & > .meta {
+      font-size: 0.82rem;
+    }
+    & > .desc > h3 {
+      font-size: 0.95rem;
+    }
+  }
+
+  // 移动端标签页 h2 更紧凑
+  body[data-slug^="tags/"] .page-listing > h2 {
+    margin: 0.5rem 0 0.2rem;
+    font-size: 1.05rem;
+  }
+}

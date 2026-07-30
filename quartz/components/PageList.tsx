@@ -63,8 +63,12 @@ export const PageList: QuartzComponent = ({ cfg, fileData, allFiles, limit, sort
     list = list.slice(0, limit)
   }
 
+  // 检测是否在标签页上下文（/tags/ 或 /tags/<tag>），用于差异化样式
+  const isTagPage = fileData.slug?.startsWith("tags/")
+  const rootClass = isTagPage ? "section-ul tag-page-list" : "section-ul"
+
   return (
-    <ul class="section-ul">
+    <ul class={rootClass}>
       {list.map((page) => {
         const title = page.frontmatter?.title
         const tags = page.frontmatter?.tags ?? []
@@ -110,5 +114,13 @@ PageList.css = `
 
 .section > .tags {
   margin: 0;
+}
+
+/* 标签页文章列表：紧凑行距，接近官方效果 */
+.tag-page-list > .section-li {
+  margin-bottom: 0.4rem;
+}
+.tag-page-list > .section-li > .section {
+  padding: 0.25rem 0;
 }
 `

@@ -76,8 +76,9 @@ async function buildQuartz(argv: Argv, mut: Mutex, clientRefresh: () => void) {
 
   const release = await mut.acquire()
   perf.addEvent("clean")
-  await rm(output, { recursive: true, force: true })
-  console.log(`Cleaned output directory \`${output}\` in ${perf.timeSince("clean")}`)
+  // WorkBuddy sandbox safe-delete 与 fs.rm 冲突，临时跳过
+  // await rm(output, { recursive: true, force: true })
+  console.log(`Skipped clean output directory \`${output}\``)
 
   perf.addEvent("glob")
   const allFiles = await glob("**/*.*", argv.directory, cfg.configuration.ignorePatterns)
