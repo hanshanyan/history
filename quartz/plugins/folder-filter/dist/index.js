@@ -42,7 +42,7 @@ var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin
 .folder-table td a.internal{text-decoration:none}
 .folder-table td a.internal:hover{text-decoration:underline}
 .folder-table .tag-pill{display:inline-block;margin:0 .35rem .25rem 0;font-size:.85rem}
-.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}`;
+.folder-table .tag-pill a{padding:.1rem .35rem;background:var(--lightgray);border-radius:4px;color:inherit}.folder-table th select.date-mode{display:block;width:100%;margin-top:.25rem;padding:.25rem .35rem;font:inherit;font-weight:400;border:1px solid var(--lightgray);border-radius:4px;background:var(--light);color:var(--dark)}.folder-table th input[data-date-year]:disabled{opacity:.5;cursor:not-allowed}`;
 
 // client script (runs via afterDOMLoaded)
 var folderFilter_inline = `(function(){
@@ -84,7 +84,7 @@ var folderFilter_inline = `(function(){
     var headers = Array.prototype.slice.call(table.querySelectorAll('th[data-col]'));
     headers.forEach(function(th){
       th.addEventListener('click', function(e){
-        if (e.target && e.target.tagName === 'INPUT') return;
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'OPTION')) return;
         var col = th.getAttribute('data-col');
         var cur = table.getAttribute('data-sort-col');
         var dir = 'asc';
@@ -103,6 +103,12 @@ var folderFilter_inline = `(function(){
         var k = inputs[i].getAttribute('data-filter');
         filters[k] = (inputs[i].value || '').trim().toLowerCase();
       }
+      var dateTh = table.querySelector('th[data-col="date"]');
+      var dateSel = dateTh ? dateTh.querySelector('select[data-date-mode]') : null;
+      var dateYearInp = dateTh ? dateTh.querySelector('input[data-date-year]') : null;
+      var dateMode = dateSel ? dateSel.value : '';
+      var dateYearNum = dateYearInp ? parseInt((dateYearInp.value || '').trim(), 10) : NaN;
+      var dateActive = !!dateMode && (dateMode === 'empty' ? true : !isNaN(dateYearNum) && dateYearNum > 0);
       getRows().forEach(function(row){
         var ok = true;
         for (var k in filters){
@@ -117,25 +123,20 @@ var folderFilter_inline = `(function(){
             if (!tagOk){ ok = false; break; }
             continue;
           }
-          if (k === 'date'){
-            var dv = filters[k];
-            var opm = dv.match(/^(>=|<=|>|<)(\d{4})$/);
-            if (opm){
-              var op = opm[1], y = parseInt(opm[2],10);
-              var dm = (row.children[2] ? row.children[2].textContent : '').match(/(\d{4})/);
-              var ry = dm ? parseInt(dm[1],10) : null;
-              var dateOk = ry !== null;
-              if (op === '>') dateOk = ry > y;
-              else if (op === '<') dateOk = ry < y;
-              else if (op === '>=') dateOk = ry >= y;
-              else if (op === '<=') dateOk = ry <= y;
-              if (!dateOk){ ok = false; break; }
-              continue;
-            }
-          }
           var idx = {title:0, tags:1, date:2, source:3, author:4}[k];
           var text = (row.children[idx] ? row.children[idx].textContent : '').trim().toLowerCase();
           if (text.indexOf(filters[k]) === -1){ ok = false; break; }
+        }
+        if (ok && dateActive){
+          var ts = parseInt(row.getAttribute('data-ts') || '0', 10);
+          var hasDate = ts > 0;
+          var ry = hasDate ? new Date(ts).getFullYear() : null;
+          var dateOk = false;
+          if (dateMode === 'empty') dateOk = !hasDate;
+          else if (dateMode === 'after') dateOk = hasDate && ry > dateYearNum;
+          else if (dateMode === 'before') dateOk = hasDate && ry < dateYearNum;
+          else if (dateMode === 'equal') dateOk = hasDate && ry === dateYearNum;
+          if (!dateOk) ok = false;
         }
         row.style.display = ok ? '' : 'none';
       });
@@ -145,6 +146,21 @@ var folderFilter_inline = `(function(){
       inp.addEventListener('input', filter);
       inp.addEventListener('keydown', function(e){ e.stopPropagation(); });
     });
+    var dateThBind = table.querySelector('th[data-col="date"]');
+    if (dateThBind){
+      var ds = dateThBind.querySelector('select[data-date-mode]');
+      var dy = dateThBind.querySelector('input[data-date-year]');
+      if (ds){
+        ds.addEventListener('change', function(){
+          if (dy){ dy.disabled = ds.value === 'empty'; if (ds.value === 'empty') dy.value = ''; }
+          filter();
+        });
+      }
+      if (dy){
+        dy.addEventListener('input', filter);
+        dy.addEventListener('keydown', function(e){ e.stopPropagation(); });
+      }
+    }
     var curCol = table.getAttribute('data-sort-col');
     var curDir = table.getAttribute('data-sort-dir');
     if (curCol && curDir) sortBy(curCol, curDir);
@@ -304,6 +320,25 @@ var FolderFilter_default = ((opts) => {
       "data-col": key,
       children: [label, u2("span", { class: "sort-indicator" }), u2("input", { type: "text", "data-filter": key, placeholder: placeholder })]
     });
+    const dateHeader = u2("th", {
+      class: "sortable desc",
+      "data-col": "date",
+      children: [
+        "发表时间",
+        u2("span", { class: "sort-indicator" }),
+        u2("select", {
+          "data-date-mode": "after",
+          class: "date-mode",
+          children: [
+            u2("option", { value: "after", children: ["晚于"] }),
+            u2("option", { value: "before", children: ["早于"] }),
+            u2("option", { value: "equal", children: ["等于"] }),
+            u2("option", { value: "empty", children: ["为空"] }),
+          ]
+        }),
+        u2("input", { type: "text", "data-date-year": "", placeholder: "年份", inputmode: "numeric" })
+      ]
+    });
 
     const tagLink = (tag) => u2("span", { class: "tag-pill", children: [
       u2("a", { href: basePath + "/tags/" + tag, class: "internal tag-link", children: [tag] })
@@ -317,7 +352,7 @@ var FolderFilter_default = ((opts) => {
         u2("thead", { children: [u2("tr", { children: [
           colHeader("title", "标题"),
           colHeader("tags", "标签", "", "空格分隔可多选"),
-          colHeader("date", "发表时间", "desc", "含 或 >1978/<1958"),
+          dateHeader,
           colHeader("source", "来源"),
           colHeader("author", "作者"),
         ] })] }),
