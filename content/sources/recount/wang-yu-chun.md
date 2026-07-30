@@ -4,7 +4,6 @@ author: 王玉春
 tags:
   - 工作人员
   - 45-50解放战争
-publish: 2006-11-22
 origin:
   - 网络
 aliases:
