@@ -491,7 +491,7 @@ li[id^="user-content-fn"] {
 // —— Explorer 文章标题（如"刘显宜：敖山庙战斗"）字号，文件夹标题（史料等）保持 0.95rem 不变 ——
 // 仅命中文件链接 .explorer-content ul li > a，命中不到 .folder-container div > a（文件夹标题）
 .explorer .explorer-content ul li > a {
-  font-size: 0.8rem !important;
+  font-size: 0.85rem !important;
 }
 
 // —— 目录(ToC)各级标题字号从大到小：桌面端 + 移动端统一 ——
