@@ -107,8 +107,17 @@ var folderFilter_inline = `(function(){
       var dateSel = dateTh ? dateTh.querySelector('select[data-date-mode]') : null;
       var dateYearInp = dateTh ? dateTh.querySelector('input[data-date-year]') : null;
       var dateMode = dateSel ? dateSel.value : '';
-      var dateYearNum = dateYearInp ? parseInt((dateYearInp.value || '').trim(), 10) : NaN;
-      var dateActive = !!dateMode && (dateMode === 'empty' ? true : !isNaN(dateYearNum) && dateYearNum > 0);
+      var rawYear = dateYearInp ? (dateYearInp.value || '').trim() : '';
+      var fullDateMatch = rawYear.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+      var dateTs = NaN;
+      var dateYearNum = NaN;
+      if (fullDateMatch) {
+        dateTs = new Date(Number(fullDateMatch[1]), Number(fullDateMatch[2]) - 1, Number(fullDateMatch[3])).getTime();
+      } else {
+        dateYearNum = parseInt(rawYear, 10);
+        if (isNaN(dateYearNum) || dateYearNum <= 0) dateYearNum = NaN;
+      }
+      var dateActive = !!dateMode && dateMode !== 'all' && (dateMode === 'empty' ? true : (!isNaN(dateYearNum) || !isNaN(dateTs)));
       getRows().forEach(function(row){
         var ok = true;
         for (var k in filters){
@@ -118,7 +127,12 @@ var folderFilter_inline = `(function(){
             var rowTags = (row.getAttribute('data-tags') || '').toLowerCase().split(/\s+/);
             var tagOk = true;
             for (var ri=0; ri<reqs.length; ri++){
-              if (rowTags.indexOf(reqs[ri]) === -1){ tagOk = false; break; }
+              var req = reqs[ri];
+              var hit = false;
+              for (var ti=0; ti<rowTags.length; ti++){
+                if (rowTags[ti].indexOf(req) !== -1){ hit = true; break; }
+              }
+              if (!hit){ tagOk = false; break; }
             }
             if (!tagOk){ ok = false; break; }
             continue;
@@ -129,13 +143,24 @@ var folderFilter_inline = `(function(){
         }
         if (ok && dateActive){
           var ts = parseInt(row.getAttribute('data-ts') || '0', 10);
-          var hasDate = ts > 0;
-          var ry = hasDate ? new Date(ts).getFullYear() : null;
+          var hasDate = ts !== 0 && !isNaN(ts);
           var dateOk = false;
-          if (dateMode === 'empty') dateOk = !hasDate;
-          else if (dateMode === 'after') dateOk = hasDate && ry > dateYearNum;
-          else if (dateMode === 'before') dateOk = hasDate && ry < dateYearNum;
-          else if (dateMode === 'equal') dateOk = hasDate && ry === dateYearNum;
+          if (dateMode === 'empty') {
+            dateOk = !hasDate;
+          } else if (!hasDate) {
+            dateOk = false;
+          } else if (dateMode === 'after') {
+            dateOk = !isNaN(dateTs) ? ts > dateTs : new Date(ts).getFullYear() > dateYearNum;
+          } else if (dateMode === 'before') {
+            dateOk = !isNaN(dateTs) ? ts < dateTs : new Date(ts).getFullYear() < dateYearNum;
+          } else if (dateMode === 'equal') {
+            if (!isNaN(dateTs)) {
+              var dt = new Date(ts), tt = new Date(dateTs);
+              dateOk = dt.getFullYear() === tt.getFullYear() && dt.getMonth() === tt.getMonth() && dt.getDate() === tt.getDate();
+            } else {
+              dateOk = new Date(ts).getFullYear() === dateYearNum;
+            }
+          }
           if (!dateOk) ok = false;
         }
         row.style.display = ok ? '' : 'none';
@@ -152,7 +177,7 @@ var folderFilter_inline = `(function(){
       var dy = dateThBind.querySelector('input[data-date-year]');
       if (ds){
         ds.addEventListener('change', function(){
-          if (dy){ dy.disabled = ds.value === 'empty'; if (ds.value === 'empty') dy.value = ''; }
+          if (dy){ dy.disabled = (ds.value === 'empty' || ds.value === 'all'); if (ds.value === 'empty' || ds.value === 'all') dy.value = ''; }
           filter();
         });
       }
@@ -327,16 +352,17 @@ var FolderFilter_default = ((opts) => {
         "发表时间",
         u2("span", { class: "sort-indicator" }),
         u2("select", {
-          "data-date-mode": "after",
+          "data-date-mode": "all",
           class: "date-mode",
           children: [
+            u2("option", { value: "all", children: ["全部"] }),
             u2("option", { value: "after", children: ["晚于"] }),
             u2("option", { value: "before", children: ["早于"] }),
             u2("option", { value: "equal", children: ["等于"] }),
             u2("option", { value: "empty", children: ["为空"] }),
           ]
         }),
-        u2("input", { type: "text", "data-date-year": "", placeholder: "年份", inputmode: "numeric" })
+        u2("input", { type: "text", "data-date-year": "", placeholder: "年份或 YYYY-MM-DD", inputmode: "numeric" })
       ]
     });
 
