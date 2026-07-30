@@ -150,9 +150,9 @@ var folderFilter_inline = `(function(){
           } else if (!hasDate) {
             dateOk = false;
           } else if (dateMode === 'after') {
-            dateOk = !isNaN(dateTs) ? ts > dateTs : new Date(ts).getFullYear() > dateYearNum;
+            dateOk = !isNaN(dateTs) ? ts >= dateTs : new Date(ts).getFullYear() >= dateYearNum;
           } else if (dateMode === 'before') {
-            dateOk = !isNaN(dateTs) ? ts < dateTs : new Date(ts).getFullYear() < dateYearNum;
+            dateOk = !isNaN(dateTs) ? ts <= dateTs : new Date(ts).getFullYear() <= dateYearNum;
           } else if (dateMode === 'equal') {
             if (!isNaN(dateTs)) {
               var dt = new Date(ts), tt = new Date(dateTs);
@@ -362,7 +362,7 @@ var FolderFilter_default = ((opts) => {
             u2("option", { value: "empty", children: ["为空"] }),
           ]
         }),
-        u2("input", { type: "text", "data-date-year": "", placeholder: "年份或 YYYY-MM-DD", inputmode: "numeric" })
+        u2("input", { type: "text", "data-date-year": "", placeholder: "年份或 YYYY/MM/DD", inputmode: "numeric" })
       ]
     });
 
