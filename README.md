@@ -27,18 +27,6 @@ git add quartz/plugins/folder-filter/dist/index.js
 git commit -m "filter folder px" 
 git push origin main
 
-- [x] 指挥要则
-- [x] 关于作战战术的指示
-- [x] 论战术思想与战斗作风
-- [x] 关于总攻击开始时间问题的指示
-- [x] 战役指挥问题
-- [x] 硬拼仗问答
-- [x] 运动战
-- [x] 关于""四快一慢"的报告
-- [x] 关于“四快一慢”的补充报告
-- [x] 要使司令部成为能干的指挥机关
-- [x] 关于军队教育管理问题
-- [ ] 关于攻坚战的战术问题
 # YAML （客观信息）
 title：标题
 author：作者
