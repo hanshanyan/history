@@ -23,7 +23,7 @@ var f2 = 0;
 
 // styles
 var folderFilter_css = `.folder-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.95rem;table-layout:fixed}.folder-filter{overflow-x:auto}
-.folder-table th:nth-child(1){width:285px}
+.folder-table th:nth-child(1){width:280px}
 .folder-table th:nth-child(2){width:90px}
 .folder-table th:nth-child(3){width:245px}
 .folder-table th:nth-child(4){width:110px}
