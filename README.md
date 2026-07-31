@@ -1,7 +1,7 @@
 
 欢迎来到寒山唁的个人历史研究资料库。
 
-# 可用EMOJI
+# 可用EMOJI 📜
 📚 研究方向
 📂 仓库目录
 ✍️ 写作原则
@@ -21,13 +21,40 @@
 ⚠️ 注意
 ❦ 分隔符
 
-代码
+# 代码
 cd C:/Users/liwen/history 
 git add quartz/plugins/folder-filter/dist/index.js 
 git commit -m "filter folder px" 
 git push origin main
 
-# YAML （客观信息）
+# 年谱
+> [!info] 用法
+> 三栏平行年谱：每栏一个「谱」，从上往下按日期记录。新增一个「谱」就加一个 `<div>`；新增一条目就在对应 `<div>` 里加一段（空一行分隔即为新段落）。
+> 增删月份：用 `## 年月` 作小标题，标题下放入一个 `<div class="chronology">…</div>` 即可。
+
+<div class="chronology">
+
+<div>
+
+**官方大事件**
+
+</div>
+
+<div>
+
+**张鹤军谱**
+
+</div>
+
+<div>
+
+**李德谱**
+
+</div>
+
+</div>
+
+# YAML 客观信息
 title：标题
 author：作者
 tags：标签
@@ -43,29 +70,28 @@ people：人物
 
 唯一性、可排序、可筛选、可统计
 
-# Tags (主观分类)
+# Tags 主观分类
 （1）主题
-#战史回忆 #口述史 #回忆录 #电报 #文集 #讲话 #论文 #综述
+战史回忆 口述史 回忆录 电报 文集 讲话 论文 综述
 
 （2）历史时期
  #27-28井冈山 #34-36长征 #37-45抗日 #45-50解放战争 #50-71建国后
 
 （3）研究专题
- #辽沈战役 #平型关 #四野 #军事思想
+ # 辽沈战役 # 平型关 # 四野 # 军事思想
 
 （4）人物身份
 #工作人员 #亲人 #相关人士
-
-# 章节跳转
-
-- [文字处理](#文字处理) 
-- [段落处理](#段落处理)
 
 # Obsidian小贴士
 外联：[外链名字](外链地址)
 内链：[[ao-shan-miao|敖山庙伏击]]
 段落跳转：[[ao-shan-miao#^1|原文跳转 ↗]]
 段落引用：![[ao-shan-miao#^1]]
+
+## 章节跳转
+
+[Quartz自定义](#Quartz自定义)
 
 ## 文字处理
 `标灰`、<kbd> Ctrl </kbd>
@@ -81,7 +107,9 @@ people：人物
 上标：10<sup>6</sup>
 
 
-## 段落处理 Callout
+## 段落处理 
+
+Callout
 
 > [!quote] Quote｜引文、原始史料
 
@@ -140,7 +168,7 @@ people：人物
 
 修改高亮颜色：
 mark {
-    background: #ffd54f;
+    background: # ffd54f;
 }
 
 修改Refer颜色：
@@ -148,7 +176,7 @@ mark {
 
 
 blockquote {
-    border-left:5px solid #b22222;
+    border-left:5px solid # b22222;
 }
 
 修改Quote颜色：
