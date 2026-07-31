@@ -3,7 +3,7 @@ title: 刘显宜：敖山庙伏击
 author: 刘显宜
 tags:
   - 27-28井冈山
-  - 战史回忆
+  - 战友
   - zlib
 publish: 1958-08-01
 origin:

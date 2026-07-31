@@ -3,7 +3,7 @@ title: 陈士渠：七溪岭战斗
 author: 陈士渠
 tags:
   - 27-28井冈山
-  - 战史回忆
+  - 战友
   - zlib
 publish: 1958-08-01
 origin:
