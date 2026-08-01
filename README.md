@@ -32,6 +32,8 @@ git push origin main
 > 三栏平行年谱：每栏一个「谱」，从上往下按日期记录。新增一个「谱」就加一个 `<div>`；新增一条目就在对应 `<div>` 里加一段（空一行分隔即为新段落）。
 > 增删月份：用 `## 年月` 作小标题，标题下放入一个 `<div class="chronology">…</div>` 即可。
 
+<details> <summary>概述</summary>完整</details>
+
 <div class="chronology">
 
 <div>
@@ -102,7 +104,6 @@ people：人物
 ==高亮==
 <p align="right"> 右起 </p>
 <p align="center"> 居中 </p>
-<details> <summary>概述（展开可见原始史料）</summary> 这里放原始史料…… 这里放几十页…… </details>
 下标：H<sub>2</sub>O
 上标：10<sup>6</sup>
 
