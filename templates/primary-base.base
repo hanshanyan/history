@@ -1,0 +1,17 @@
+filters:
+  and:
+    - file.folder == "content/sources/primary"
+views:
+  - type: table
+    name: 表格
+    order:
+      - file.name
+      - title
+      - publish
+    sort:
+      - property: publish
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 98

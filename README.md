@@ -1,6 +1,12 @@
 
 欢迎来到寒山唁的个人历史研究资料库。
 
+## 章节跳转
+
+[文字处理](#文字处理)
+[段落处理](#段落处理)
+[Quartz自定义](#Quartz自定义)
+
 # 可用EMOJI 📜
 📚 研究方向
 📂 仓库目录
@@ -28,11 +34,13 @@ git commit -m "filter folder px"
 git push origin main
 
 # 年谱
+
+<details> <summary>概述</summary>完整</details>
+
+
 > [!info] 用法
 > 三栏平行年谱：每栏一个「谱」，从上往下按日期记录。新增一个「谱」就加一个 `<div>`；新增一条目就在对应 `<div>` 里加一段（空一行分隔即为新段落）。
 > 增删月份：用 `## 年月` 作小标题，标题下放入一个 `<div class="chronology">…</div>` 即可。
-
-<details> <summary>概述</summary>完整</details>
 
 <div class="chronology">
 
@@ -80,7 +88,7 @@ people：人物
  #27-28井冈山 #34-36长征 #37-45抗日 #45-50解放战争 #50-71建国后
 
 （3）研究专题
- # 辽沈战役 # 平型关 # 四野 # 军事思想
+  辽沈战役 # 平型关 # 四野 # 军事思想
 
 （4）人物身份
 #工作人员 #亲人 #相关人士
@@ -90,10 +98,6 @@ people：人物
 内链：[[ao-shan-miao|敖山庙伏击]]
 段落跳转：[[ao-shan-miao#^1|原文跳转 ↗]]
 段落引用：![[ao-shan-miao#^1]]
-
-## 章节跳转
-
-[Quartz自定义](#Quartz自定义)
 
 ## 文字处理
 `标灰`、<kbd> Ctrl </kbd>
@@ -106,6 +110,12 @@ people：人物
 <p align="center"> 居中 </p>
 下标：H<sub>2</sub>O
 上标：10<sup>6</sup>
+
+| 标题 | 作者 | 出版时间 | 类型 | 
+|------|------|------|------| 
+||||| 
+| [敖山庙伏击](/content/sources/war/ao-shan-miao.md) | 刘显宜 | 1958 | 战役回忆 | 
+| [七溪岭战斗](/content/sources/war/qi-xi-ling.md) | 陈士渠 | 1958 | 战役回忆 |
 
 
 ## 段落处理 
