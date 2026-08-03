@@ -251,9 +251,11 @@ var FolderFilter_default = ((opts) => {
     let current = (fileData?.slug ?? "");
     if (current.endsWith("/index")) current = current.slice(0, -"/index".length);
     if (current === "" || current === "index") return null;
-    if (current === "people") return null;
-    if (current === "tags") return null;
+
+    // 限定 folder-filter 只在 sources、analysis 及其子目录，以及标签页生效
+    const isTargetFolder = current === "sources" || current.startsWith("sources/") || current === "analysis" || current.startsWith("analysis/");
     const isTagPage = current.startsWith("tags/");
+    if (!isTargetFolder && !isTagPage) return null;
     const allSlugs = new Set((allFiles ?? []).map((f) => f.slug ?? ""));
     const isFolder = (slug) => {
       for (const other of allSlugs) {
