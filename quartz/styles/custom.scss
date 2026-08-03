@@ -488,10 +488,10 @@ li[id^="user-content-fn"] {
   scroll-margin-top: 35vh;
 }
 
-// —— Explorer 文件标题与文件夹标题字号统一为 0.95rem ——
-.explorer .explorer-content ul li > a,
-.explorer .explorer-content .folder-title {
-  font-size: 0.95rem !important;
+// —— Explorer 文章标题（文件链接，如"索引"）字号 0.85rem ——
+// 文件夹标题（如"年谱"这类目录）由 explorer 自带 .folder-title 默认 0.95rem 渲染，保持不动
+.explorer .explorer-content ul li > a {
+  font-size: 0.85rem !important;
 }
 
 // —— 目录(ToC)各级标题字号从大到小：桌面端 + 移动端统一 ——
